@@ -7,6 +7,7 @@ function randomInteger(min,max) {
     return 'Некорректные вводные';
   }
 }
+randomInteger(0,5);
 
 // Функция, возвращающая случайное число с плавающей точкой из переданного диапазона включительно.
 
@@ -17,3 +18,4 @@ function randomNonInteger(min,max,symbols) {
     return 'Некорректные вводные';
   }
 }
+randomNonInteger(0.1,5,3);
