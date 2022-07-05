@@ -99,8 +99,8 @@ const generateAds = function() {
         avatar: 'img/avatars/user' + String(xx) + '.png',
       },
       offer: {
-        title: 'Апартаменты номер ' + String(xx),
-        address: String(lat) + ', ' + String(lng),
+        title: "Апартаменты номер " + xx,
+        address: lat + ", " + lng,
         price: getRandomPositiveInteger(1, maxPrice),
         type: types[getRandomPositiveInteger(0, types.length - 1)],
         rooms: getRandomPositiveInteger(1, maxRooms),
