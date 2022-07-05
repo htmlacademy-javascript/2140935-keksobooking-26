@@ -15,52 +15,56 @@ function getRandomPositiveFloat (a, b, digits = 1) {
 }
 
 // функция проверки, есть ли число в массиве, если есть false
-let compare = function(item, array) {
-    for (let j = 0; j < array.length; j++) {
-      if (item === array[j]) {
-        return false;
-      }
+const compare = function(item, array) {
+  for (let j = 0; j < array.length; j++) {
+    if (item === array[j]) {
+      return false;
     }
-    return true;
+  }
+  return true;
 };
 
 // функция генерации булева массива случайных ключей
-let booleanRandomArray = function (quantity) {
-  let array = [];
+const booleanRandomArray = function (quantity) {
+  const array = [];
   for (let j = 0; j < quantity; j++) {
     array[j] = getRandomPositiveInteger(0, 1);
   }
   return array;
-}
+};
 
 //! основная функция: генерация массива случайных объектов
-let generateAds = function(value) {
+const generateAds = function() {
 
   // вводные
-  let ads = [];
-  let maxPrice = 1000;
-  let maxRooms = 5;
-  let maxGuests = 20;
-  let types = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-  let checkInOut = ['12:00', '13:00', '14:00'];
-  let features = ['features', 'wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  let description = ['Очень хорошее место', 'Хороший утренний кофе', 'Вид на закат', 'Вид на рассвет', 'Можно с кошкой', 'Можно с собакой', 'Можно с крокодилом', 'Дом с привидениями', 'Дом с жуками', 'Холодно и гадко']; // проверка по уникальности: к-во описаний >= к-ва объявлений
-  let photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+  const value = 10; // к-во объектов размещения
+  const ads = [];
+  const maxPrice = 1000;
+  const maxRooms = 5;
+  const maxGuests = 20;
+  const types = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+  const checkInOut = ['12:00', '13:00', '14:00'];
+  const features = ['features', 'wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  const description = ['Очень хорошее место', 'Хороший утренний кофе', 'Вид на закат', 'Вид на рассвет', 'Можно с кошкой', 'Можно с собакой', 'Можно с крокодилом', 'Дом с привидениями', 'Дом с жуками', 'Холодно и гадко']; // проверка по уникальности: к-во описаний >= к-ва объявлений
+  const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
   // генерируем массив случайных уникальных ключей для description
-  let randomKeys = [];
+  const randomKeys = [];
+  let tempKey;
   for (let j = 0; j < value; j++) {
     tempKey = getRandomPositiveInteger(0, description.length - 1);
     if (compare(tempKey, randomKeys)) {
       randomKeys[j] = tempKey;
-    } else j--;
+    } else {
+      j--;
+    }
   }
 
   // основной цикл
   for (let i = 0; i < value; i++) {
 
     // генерируем массив для features
-    let randomBooleanFeatures = booleanRandomArray(features.length);
+    const randomBooleanFeatures = booleanRandomArray(features.length);
     let featuresItem = [];
     for (let j = 0; j < features.length; j++) {
       if (randomBooleanFeatures[j]) {
@@ -69,7 +73,7 @@ let generateAds = function(value) {
     }
 
     // генерируем массив для photos
-    let randomBooleanPhotos = booleanRandomArray(photos.length);
+    const randomBooleanPhotos = booleanRandomArray(photos.length);
     let photosItem = [];
     for (let j = 0; j < photos.length; j++) {
       if (randomBooleanPhotos[j]) {
@@ -86,8 +90,8 @@ let generateAds = function(value) {
     }
 
     // генерируем координаты
-    let lat = getRandomPositiveFloat (35.65000, 35.70000, digits = 5);
-    let lng = getRandomPositiveFloat (139.70000, 139.80000, digits = 5);
+    const lat = getRandomPositiveFloat (35.65000, 35.70000, 5);
+    const lng = getRandomPositiveFloat (139.70000, 139.80000, 5);
 
     // генерация массива объектов
     ads[i] = {
@@ -111,10 +115,10 @@ let generateAds = function(value) {
         lat: lat,
         lng: lng
       }
-    }// array end
+    };// array end
 
   }// for end
   return ads;
-}// function end
+};// function end
 
-  generateAds(10); // к-во объектов для генерации
+generateAds(); // запуск функции для генерации 10 объектов
