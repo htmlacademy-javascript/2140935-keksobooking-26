@@ -89,8 +89,6 @@ const generateAds = function() {
       xx = `${i + 1}`;
     }
 
-    console.log(xx)
-
     // генерируем координаты
     const lat = getRandomPositiveFloat (35.65000, 35.70000, 5);
     const lng = getRandomPositiveFloat (139.70000, 139.80000, 5);
@@ -102,7 +100,7 @@ const generateAds = function() {
       },
       offer: {
         title: `Апартаменты номер ${xx}`,
-        address: lat + ', ' + lng,
+        address: `${lat}, ${lng}`,
         price: getRandomPositiveInteger(1, maxPrice),
         type: types[getRandomPositiveInteger(0, types.length - 1)],
         rooms: getRandomPositiveInteger(1, maxRooms),
