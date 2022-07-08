@@ -84,9 +84,9 @@ const generateAds = function() {
     // генерация кода объекта
     let xx;
     if (i + 1 < 10) {
-      xx = '0' + i + 1;
+      xx = `0${i + 1}`;
     } else {
-      xx = '' + i + 1;
+      xx = `${i + 1}`;
     }
 
     // генерируем координаты
@@ -96,11 +96,11 @@ const generateAds = function() {
     // генерация массива объектов
     ads[i] = {
       author: {
-        avatar: 'img/avatars/user' + xx + '.png',
+        avatar: `img/avatars/user${xx}.png`,
       },
       offer: {
-        title: 'Апартаменты номер ' + xx,
-        address: lat + ', ' + lng,
+        title: `Апартаменты номер ${xx}`,
+        address: `${lat}, ${lng}`,
         price: getRandomPositiveInteger(1, maxPrice),
         type: types[getRandomPositiveInteger(0, types.length - 1)],
         rooms: getRandomPositiveInteger(1, maxRooms),
@@ -115,10 +115,10 @@ const generateAds = function() {
         lat: lat,
         lng: lng
       }
-    };// array end
+    };
 
-  }// for end
+  }
   return ads;
-};// function end
+};
 
 generateAds(); // запуск функции для генерации 10 объектов
