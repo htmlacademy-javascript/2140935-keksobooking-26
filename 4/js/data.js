@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger, getRandomPositiveFloat, compare, booleanRandomArray} from './utils';
+import {getRandomPositiveInteger, getRandomPositiveFloat, compare, booleanRandomArray} from './utils.js';
 
 // вводные
 const value = 10; // к-во объектов размещения
