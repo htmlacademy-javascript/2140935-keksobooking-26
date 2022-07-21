@@ -42,10 +42,15 @@ const generateAds = function() {
     // генерируем массив для photos
     const randomBooleanPhotos = booleanRandomArray(photos.length);
     let photosItem = [];
+    let flag = true;
     for (let j = 0; j < photos.length; j++) {
       if (randomBooleanPhotos[j]) {
         photosItem = photosItem.concat(photos[j]);
+        flag = false;
       }
+    }
+    if (flag) {
+      photosItem = photosItem.concat(photos[0]);
     }
 
     // генерация кода объекта
