@@ -3,12 +3,12 @@ const offers = generateAds();
 
 // Типы жилья
 const popupTypes = {
-  flat: "Квартира",
-  bungalow: "Бунгало",
-  house: "Дом",
-  palace: "Дворец",
-  hotel:  "Отель"
-}
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel:  'Отель'
+};
 
 const similarTemplateFunction = function(adNumber) {
   adNumber = adNumber - 1;
@@ -34,7 +34,7 @@ const similarTemplateFunction = function(adNumber) {
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
   featuresList.forEach((featuresListItem) => {
     const isNecessary = popupFeatures.some(
-      (popupFeature) => featuresListItem.classList.contains('popup__feature--' + popupFeature),
+      (popupFeature) => featuresListItem.classList.contains(`popup__feature--${popupFeature}`),
     );
 
     if (!isNecessary) {
@@ -42,24 +42,24 @@ const similarTemplateFunction = function(adNumber) {
     }
   });
   //В блок .popup__description выведите описание объекта недвижимости offer.description.
-  let popupDescription = similarTemplate.querySelector('.popup__description');
+  const popupDescription = similarTemplate.querySelector('.popup__description');
   popupDescription.textContent = offers[adNumber].offer.description;
   if (!popupDescription.textContent) {
     popupDescription.remove();
   }
   //В блок .popup__photos выведите все фотографии из списка offer.photos.
   //Каждая из строк массива photos должна записываться как атрибут src соответствующего изображения.
-  let popupPhoto = similarTemplate.querySelector('.popup__photo');
+  const popupPhoto = similarTemplate.querySelector('.popup__photo');
   popupPhoto.src = offers[adNumber].offer.photos[0];
-  let popupPhotos = similarTemplate.querySelector('.popup__photos');
+  const popupPhotos = similarTemplate.querySelector('.popup__photos');
   for (let j = 1; j < offers[adNumber].offer.photos.length; j++) {
-    let clonedPhoto = popupPhoto.cloneNode(true);
+    const clonedPhoto = popupPhoto.cloneNode(true);
     clonedPhoto.src = offers[adNumber].offer.photos[j];
     popupPhotos.appendChild(clonedPhoto);
   }
   // Замените значение атрибута src у аватарки пользователя .popup__avatar на значение поля author.avatar
-  similarTemplate.querySelector("img").src = offers[adNumber].author.avatar;
+  similarTemplate.querySelector('img').src = offers[adNumber].author.avatar;
 
   mapCanvas.appendChild(similarTemplate);
-}
+};
 similarTemplateFunction(1); //порядковый номер объявления, выводимого в шаблоне
