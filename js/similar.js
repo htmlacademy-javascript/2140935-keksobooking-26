@@ -62,4 +62,5 @@ const similarTemplateFunction = function(adNumber) {
 
   mapCanvas.appendChild(similarTemplate);
 };
-similarTemplateFunction(1); //порядковый номер объявления, выводимого в шаблоне
+
+export {similarTemplateFunction};
