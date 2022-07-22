@@ -1,3 +1,4 @@
-import {generateAds} from './data.js';
+//import {generateAds} from './data.js';
+import './similar.js';
 
-generateAds(); // запуск функции для генерации 10 объектов
+
