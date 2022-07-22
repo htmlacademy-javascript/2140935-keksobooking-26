@@ -13,12 +13,12 @@ const formInactive = function() {
   adForm.classList.add('ad-form--disabled');
 
   const inputAll = adForm.querySelectorAll('input');
-  for (let inputElement of inputAll) {
+  for (const inputElement of inputAll) {
     inputElement.setAttribute('disabled', 'disabled');
   }
 
   const adFormFieldsetAll = adForm.querySelectorAll('fieldset');
-  for (let fieldsetElement of adFormFieldsetAll) {
+  for (const fieldsetElement of adFormFieldsetAll) {
     fieldsetElement.setAttribute('disabled', 'disabled');
   }
 
@@ -26,12 +26,12 @@ const formInactive = function() {
   mapFilters.classList.add('map__filters--disabled');
 
   const selectAll = mapFilters.querySelectorAll('select');
-  for (let selectElement of selectAll) {
+  for (const selectElement of selectAll) {
     selectElement.setAttribute('disabled', 'disabled');
   }
 
   const mapFiltersFieldsetAll = mapFilters.querySelectorAll('fieldset');
-  for (let mapFiltersFieldset of mapFiltersFieldsetAll) {
+  for (const mapFiltersFieldset of mapFiltersFieldsetAll) {
     mapFiltersFieldset.setAttribute('disabled', 'disabled');
   }
 
@@ -39,20 +39,9 @@ const formInactive = function() {
 
 /*formActive
 В активном состоянии страница позволяет:
-- Вносить изменения в форму и отправлять её на сервер;
-- После загрузки данных с сервера просматривать похожие объявления на карте, фильтровать их и уточнять
+1. Вносить изменения в форму и отправлять её на сервер;
+2. После загрузки данных с сервера просматривать похожие объявления на карте, фильтровать их и уточнять
 подробную информацию о них, показывая для каждого из объявлений карточку.
-
-element.removeAttribute(attrName);
-
-    attrName строка, имя атрибута который должен быть удалён с element.
-
-Пример
-
-// <div id="div1" align="left" width="200px">
-document.getElementById("div1").removeAttribute("align");
-// now: <div id="div1" width="200px">
-
 */
 const formActive = function() {
 
@@ -60,12 +49,12 @@ const formActive = function() {
   adFormDisabled.classList.remove('ad-form--disabled');
 
   const inputDisabledAll = document.querySelectorAll('input[disabled]');
-  for (let inputDisabled of inputDisabledAll) {
+  for (const inputDisabled of inputDisabledAll) {
     inputDisabled.removeAttribute('disabled');
   }
 
   const fieldsetDisabledAll = document.querySelectorAll('fieldset[disabled]');
-  for (let fieldsetDisabled of fieldsetDisabledAll) {
+  for (const fieldsetDisabled of fieldsetDisabledAll) {
     fieldsetDisabled.removeAttribute('disabled');
   }
 
@@ -73,7 +62,7 @@ const formActive = function() {
   mapFiltersDisabled.classList.remove('map__filters--disabled');
 
   const selectDisabledAll = document.querySelectorAll('select[disabled]');
-  for (let selectDisabled of selectDisabledAll) {
+  for (const selectDisabled of selectDisabledAll) {
     selectDisabled.removeAttribute('disabled');
   }
 
