@@ -101,7 +101,7 @@ const minAmount = {
   'Дворец': 10000
 };
 
-typeField.addEventListener('change', (evt) => {
+typeField.addEventListener('change', () => {
   const type = typeField[typeField.selectedIndex].textContent;
   priceField.placeholder = minAmount[type];
 });
@@ -136,7 +136,7 @@ const roomOptionSelect = {
   '100 комнат': '0'
 };
 
-roomField.addEventListener('change', (evt) => {
+roomField.addEventListener('change', () => {
   const room = roomField[roomField.selectedIndex].textContent;
   capacityField.value = roomOptionSelect[room];
 });
@@ -173,7 +173,8 @@ adForm.addEventListener('submit', (evt) => {
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 
-timeIn.addEventListener('change', (evt) => {
-  const time = timeIn[timeIn.selectedIndex].textContent;
+timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
 });
+
+export {formInactive, formActive};
