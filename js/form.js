@@ -92,7 +92,6 @@ pristine.addValidator(
 // Меняем плейсхолдер цены
 const typeField = adForm.querySelector('#type');
 const priceField = adForm.querySelector('#price');
-console.log(adForm.querySelector('#type')[typeField.selectedIndex].textContent);
 
 const minAmount = {
   'Бунгало': 0,
@@ -178,5 +177,3 @@ timeIn.addEventListener('change', (evt) => {
   const time = timeIn[timeIn.selectedIndex].textContent;
   timeOut.value = timeIn.value;
 });
-
-
