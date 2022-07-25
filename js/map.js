@@ -86,7 +86,7 @@ const createCustomPopup = (point) => {
       featuresListItem.remove();
     }
   });
-  if (popupFeatures.length == 0) {
+  if (popupFeatures.length === 0) {
     featuresContainer.remove();
   }
   //description
@@ -104,7 +104,7 @@ const createCustomPopup = (point) => {
     clonedPhoto.src = point.offer.photos[j];
     popupPhotos.appendChild(clonedPhoto);
   }
-  if (point.offer.photos.length == 0) {
+  if (point.offer.photos.length === 0) {
     popupPhotos.remove();
   }
   return popupElement;
