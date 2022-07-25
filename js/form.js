@@ -186,29 +186,28 @@ timeOut.addEventListener('change', () => {
 // noUiSlider
 const sliderElement = adForm.querySelector('.ad-form__slider');
 const valueElement = adForm.querySelector('#price');
-const startValue = minAmount[typeField[typeField.selectedIndex].textContent];
+let startValue = parseInt(minAmount[typeField[typeField.selectedIndex].textContent], 10);
 
 noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100000,
+range: {
+  min: 0,
+  max: 100000,
+},
+start: startValue,
+step: 100,
+connect: 'lower',
+format: {
+  to: function (value) {
+    return value.toFixed(0);
   },
-  start: startValue,
-  step: 100,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      return value.toFixed(0);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  }
+  from: function (value) {
+    return parseFloat(value);
+  },
+}
 });
 
 sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
 });
-
 
 export {formInactive, formActive};

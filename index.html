@@ -127,7 +127,7 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="room_number">Количество комнат</label>
-          <select id="rooms" name="rooms">
+          <select id="room_number" name="rooms">
             <option value="1" selected>1 комната</option>
             <option value="2">2 комнаты</option>
             <option value="3">3 комнаты</option>
@@ -171,9 +171,7 @@
             </div>
             <div class="ad-form__photo"><span id="output">
               <img id="img-preview" src="img/muffin-grey.svg" width="80" height="44">
-              <br>
             </div>
-            <a href="#img-preview" id="reset-img-preview">Удалить изображения</a>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--submit">
           <button class="ad-form__submit" type="submit" name="ad-form__submit">Опубликовать</button>
@@ -235,7 +233,7 @@
       <button type="button" class="error__button">Попробовать снова</button>
     </div>
   </template>
-  <script src="https://unpkg.com/nouislider@14.6.3/distribute/nouislider.min.js"></script>
+  <script src="nouislider/nouislider.js"></script>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
