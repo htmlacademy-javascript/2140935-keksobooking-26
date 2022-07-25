@@ -86,6 +86,9 @@ const createCustomPopup = (point) => {
       featuresListItem.remove();
     }
   });
+  if (popupFeatures.length === 0) {
+    featuresContainer.remove();
+  }
   //description
   const popupDescription = popupElement.querySelector('.popup__description');
   popupDescription.textContent = point.offer.description;
@@ -100,6 +103,9 @@ const createCustomPopup = (point) => {
     const clonedPhoto = popupPhoto.cloneNode(true);
     clonedPhoto.src = point.offer.photos[j];
     popupPhotos.appendChild(clonedPhoto);
+  }
+  if (point.offer.photos.length === 0) {
+    popupPhotos.remove();
   }
   return popupElement;
 };

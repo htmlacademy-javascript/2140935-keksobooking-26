@@ -186,7 +186,7 @@ timeOut.addEventListener('change', () => {
 // noUiSlider
 const sliderElement = adForm.querySelector('.ad-form__slider');
 const valueElement = adForm.querySelector('#price');
-const startValue = minAmount[typeField[typeField.selectedIndex].textContent];
+const startValue = parseInt(minAmount[typeField[typeField.selectedIndex].textContent], 10);
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -194,7 +194,7 @@ noUiSlider.create(sliderElement, {
     max: 100000,
   },
   start: startValue,
-  step: 100,
+  step: 1,
   connect: 'lower',
   format: {
     to: function (value) {
@@ -210,5 +210,9 @@ sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
 });
 
+valueElement.addEventListener('input', (evt) => {
+  sliderElement.noUiSlider.set(evt.target.value);
+  pristine.validate(sliderElement);
+});
 
 export {formInactive, formActive};
