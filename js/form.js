@@ -106,8 +106,9 @@ typeField.addEventListener('change', () => {
   priceField.placeholder = minAmount[type];
 });
 
-// Валидация цены (ошибки)
+// Валидация цены
 
+/*
 function validatePrice (value) {
   const type = adForm.querySelector('#type')[typeField.selectedIndex];
   return value.length && parseInt(value) >= minAmount[type.textContent];
@@ -119,6 +120,7 @@ function getPriceErrorMessage () {
 }
 
 pristine.addValidator(priceField, validatePrice, getPriceErrorMessage);
+*/
 
 // Валидация к-ва комнат
 /*3.6. Поле «Количество комнат» синхронизировано с полем «Количество мест» таким образом, что при выборе количества комнат
@@ -176,5 +178,33 @@ const timeOut = adForm.querySelector('#timeout');
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
 });
+
+// noUiSlider
+const sliderElement = adForm.querySelector('.ad-form__slider');
+const valueElement = adForm.querySelector('#price');
+const startValue = minAmount[typeField[typeField.selectedIndex].textContent];
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100000,
+  },
+  start: startValue,
+  step: 100,
+  connect: 'lower',
+  format: {
+    to: function (value) {
+      return value.toFixed(0);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  }
+});
+
+sliderElement.noUiSlider.on('update', () => {
+  valueElement.value = sliderElement.noUiSlider.get();
+});
+
 
 export {formInactive, formActive};

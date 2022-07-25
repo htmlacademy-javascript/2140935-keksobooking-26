@@ -13,6 +13,7 @@ const popupTypes = {
 const similarTemplateFunction = function(adNumber) {
   adNumber = adNumber - 1;
   const mapCanvas = document.querySelector('.map__canvas');
+  const footer = document.querySelector('.ad-form__element--submit');
   const similarTemplate = document.querySelector('#card').content;
   //Выведите заголовок объявления offer.title в заголовок .popup__title
   similarTemplate.querySelector('.popup__title').textContent = offers[adNumber].offer.title;
@@ -60,7 +61,7 @@ const similarTemplateFunction = function(adNumber) {
   // Замените значение атрибута src у аватарки пользователя .popup__avatar на значение поля author.avatar
   similarTemplate.querySelector('img').src = offers[adNumber].author.avatar;
 
-  mapCanvas.appendChild(similarTemplate);
+  footer.appendChild(similarTemplate);
 };
 
 export {similarTemplateFunction};
