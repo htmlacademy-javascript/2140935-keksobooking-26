@@ -1,3 +1,4 @@
+/*
 import {generateAds} from './data.js';
 const offers = generateAds();
 
@@ -60,8 +61,7 @@ const similarTemplateFunction = function(adNumber) {
   }
   // Замените значение атрибута src у аватарки пользователя .popup__avatar на значение поля author.avatar
   similarTemplate.querySelector('img').src = offers[adNumber].author.avatar;
-
-  footer.appendChild(similarTemplate);
 };
 
 export {similarTemplateFunction};
+*/
