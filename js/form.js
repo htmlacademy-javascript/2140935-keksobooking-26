@@ -107,11 +107,9 @@ typeField.addEventListener('change', () => {
 });
 
 // Валидация цены
-
-/*
 function validatePrice (value) {
   const type = adForm.querySelector('#type')[typeField.selectedIndex];
-  return value.length && parseInt(value) >= minAmount[type.textContent];
+  return value.length && parseInt(value, 10) >= minAmount[type.textContent];
 }
 
 function getPriceErrorMessage () {
@@ -120,7 +118,7 @@ function getPriceErrorMessage () {
 }
 
 pristine.addValidator(priceField, validatePrice, getPriceErrorMessage);
-*/
+
 
 // Валидация к-ва комнат
 /*3.6. Поле «Количество комнат» синхронизировано с полем «Количество мест» таким образом, что при выборе количества комнат
@@ -168,7 +166,9 @@ pristine.addValidator(capacityField, validateCapacity, getRoomErrorMessage);
 
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  if (pristine.validate()) {
+    adForm.submit();
+  }
 });
 
 // Синхронизация заезда / выезда
@@ -177,6 +177,10 @@ const timeOut = adForm.querySelector('#timeout');
 
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
+});
+
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
 });
 
 // noUiSlider
