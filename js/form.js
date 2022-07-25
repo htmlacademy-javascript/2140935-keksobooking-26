@@ -194,7 +194,7 @@ noUiSlider.create(sliderElement, {
     max: 100000,
   },
   start: startValue,
-  step: 100,
+  step: 1,
   connect: 'lower',
   format: {
     to: function (value) {
@@ -208,6 +208,11 @@ noUiSlider.create(sliderElement, {
 
 sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
+});
+
+valueElement.addEventListener('input', (evt) => {
+  sliderElement.noUiSlider.set(evt.target.value);
+  pristine.validate(sliderElement);
 });
 
 export {formInactive, formActive};
