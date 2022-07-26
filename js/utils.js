@@ -48,8 +48,8 @@ const successAlert = () => {
 
   window.onclick = function() {
     successElement.remove();
-  }
-}
+  };
+};
 
 const errorAlert = () => {
   const tplError = document.querySelector('#error').content.querySelector('.error');
@@ -71,12 +71,12 @@ const errorAlert = () => {
 
   btn.onclick = function() {
     errorElement.remove();
-  }
+  };
 
   window.onclick = function() {
     errorElement.remove();
-  }
-}
+  };
+};
 
 const blockSubmitButton = (button) => {
   button.disabled = true;
