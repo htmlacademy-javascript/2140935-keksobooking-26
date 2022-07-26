@@ -1,7 +1,5 @@
 import {formInactive, formActive} from './form.js';
-import {generateAds} from './data.js';
-const offers = generateAds();
-
+import {getData} from './data.js';
 formInactive();
 
 const map = L.map('map-canvas')
@@ -68,26 +66,30 @@ const createCustomPopup = (point) => {
 
   popupElement.querySelector('img').src = point.author.avatar;
   popupElement.querySelector('.popup__title').textContent = point.offer.title;
+  //console.log(point.offer.title);
   popupElement.querySelector('.popup__text--address').textContent = `Координаты: ${point.location.lat}, ${point.location.lng}`;
   popupElement.querySelector('.popup__text--price').innerHTML = `${point.offer.price} <span>₽/ночь</span>`;
   popupElement.querySelector('.popup__type').textContent = popupTypes[point.offer.type];
   popupElement.querySelector('.popup__text--capacity').textContent = `${point.offer.rooms} комнаты для ${point.offer.guests} гостей`;
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${point.offer.checkin}, выезд до ${point.offer.checkout}`;
   //features
-  const popupFeatures = point.offer.features;
-  const featuresContainer = popupElement.querySelector('.popup__features');
-  const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-  featuresList.forEach((featuresListItem) => {
-    const isNecessary = popupFeatures.some(
-      (popupFeature) => featuresListItem.classList.contains(`popup__feature--${popupFeature}`),
-    );
-
-    if (!isNecessary) {
-      featuresListItem.remove();
-    }
-  });
-  if (popupFeatures.length === 0) {
+  //вот тут все ломается так как point.offer.features undefined
+  if (point.offer.features === undefined) {
+    const featuresContainer = popupElement.querySelector('.popup__features');
     featuresContainer.remove();
+  } else {
+    const popupFeatures = point.offer.features;
+    const featuresContainer = popupElement.querySelector('.popup__features');
+    const featuresList = featuresContainer.querySelectorAll('.popup__feature');
+    featuresList.forEach((featuresListItem) => {
+      const isNecessary = popupFeatures.some(
+        (popupFeature) => featuresListItem.classList.contains(`popup__feature--${popupFeature}`),
+      );
+
+      if (!isNecessary) {
+        featuresListItem.remove();
+      }
+    });
   }
   //description
   const popupDescription = popupElement.querySelector('.popup__description');
@@ -97,15 +99,17 @@ const createCustomPopup = (point) => {
   }
   //фотографии.
   const popupPhoto = popupElement.querySelector('.popup__photo');
-  popupPhoto.src = point.offer.photos[0];
   const popupPhotos = popupElement.querySelector('.popup__photos');
-  for (let j = 1; j < point.offer.photos.length; j++) {
-    const clonedPhoto = popupPhoto.cloneNode(true);
-    clonedPhoto.src = point.offer.photos[j];
-    popupPhotos.appendChild(clonedPhoto);
-  }
-  if (point.offer.photos.length === 0) {
+
+  if (point.offer.photos === undefined) {
     popupPhotos.remove();
+  } else {
+    popupPhoto.src = point.offer.photos[0];
+    for (let j = 1; j < point.offer.photos.length; j++) {
+      const clonedPhoto = popupPhoto.cloneNode(true);
+      clonedPhoto.src = point.offer.photos[j];
+      popupPhotos.appendChild(clonedPhoto);
+    }
   }
   return popupElement;
 };
@@ -131,9 +135,14 @@ const createMarker = (element) => {
     .addTo(markerGroup)
     .bindPopup(createCustomPopup(element));
 };
+const showMessage = () => {};
 
-offers.forEach((element) => {
-  createMarker(element);
-});
+const offers = (ads) => {
+  //console.log(ads);
+  ads.forEach((element) => {
+    createMarker(element);
+  });
+};
 
+getData(offers, showMessage);
 //markerGroup.clearLayers();

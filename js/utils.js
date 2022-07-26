@@ -33,4 +33,59 @@ const booleanRandomArray = function (quantity) {
   return array;
 };
 
-export {getRandomPositiveInteger, getRandomPositiveFloat, compare, booleanRandomArray};
+// алерты
+
+const successAlert = () => {
+  const tplSuccess = document.querySelector('#success').content.querySelector('.success');
+  const successElement = tplSuccess.cloneNode(true);
+  document.body.append(successElement);
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      successElement.remove();
+    }
+  });
+
+  window.onclick = function() {
+    successElement.remove();
+  };
+};
+
+const errorAlert = () => {
+  const tplError = document.querySelector('#error').content.querySelector('.error');
+  const tplMessage = document.querySelector('#error').content.querySelector('.error__message');
+  const tplBtn = document.querySelector('#error').content.querySelector('.error__button');
+
+  const errorElement = tplError.cloneNode(false);
+  const errorMessage = tplMessage.cloneNode(true);
+  const btn = tplBtn.cloneNode(true);
+  document.body.append(errorElement);
+  errorElement.appendChild(errorMessage);
+  errorElement.appendChild(btn);
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      errorElement.remove();
+    }
+  });
+
+  btn.onclick = function() {
+    errorElement.remove();
+  };
+
+  window.onclick = function() {
+    errorElement.remove();
+  };
+};
+
+const blockSubmitButton = (button) => {
+  button.disabled = true;
+  button.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = (button) => {
+  button.disabled = false;
+  button.textContent = 'Опубликовать';
+};
+
+export {getRandomPositiveInteger, getRandomPositiveFloat, compare, booleanRandomArray, successAlert, errorAlert, blockSubmitButton, unblockSubmitButton};
