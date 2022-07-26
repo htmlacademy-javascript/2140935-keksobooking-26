@@ -40,7 +40,7 @@ const successAlert = () => {
   const successElement = tplSuccess.cloneNode(true);
   document.body.append(successElement);
 
-  document.addEventListener('keydown', function(evt) {
+  document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       successElement.remove();
     }
