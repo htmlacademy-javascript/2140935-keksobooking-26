@@ -1,5 +1,6 @@
 import './preview.js';
 import {sendData} from './data.js';
+import {successAlert, errorAlert, blockSubmitButton, unblockSubmitButton} from './utils.js';
 /*formInactive
 1. Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
 2. Все интерактивные элементы формы .ad-form должны быть заблокированы с помощью атрибута
@@ -73,6 +74,7 @@ const formActive = function() {
 // Валидация тайтла
 
 const adForm = document.querySelector('.ad-form');
+const submitButton = adForm.querySelector('.ad-form__submit');
 
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
@@ -168,15 +170,18 @@ pristine.addValidator(capacityField, validateCapacity, getRoomErrorMessage);
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
+    blockSubmitButton(submitButton);
     sendData(
       //тут функция onSuccess
       () => {
-        //Показываем окно об успешной отправке
+        successAlert();
+        unblockSubmitButton(submitButton);
         evt.target.reset();
       },
       //тут у нас функция onFail
       () => {
-        //Показываем окно об неуспешной отправке
+        errorAlert();
+        unblockSubmitButton(submitButton);
       },
       new FormData(evt.target),
     );
