@@ -66,7 +66,7 @@ const createCustomPopup = (point) => {
 
   popupElement.querySelector('img').src = point.author.avatar;
   popupElement.querySelector('.popup__title').textContent = point.offer.title;
-  console.log(point.offer.title);
+  //console.log(point.offer.title);
   popupElement.querySelector('.popup__text--address').textContent = `Координаты: ${point.location.lat}, ${point.location.lng}`;
   popupElement.querySelector('.popup__text--price').innerHTML = `${point.offer.price} <span>₽/ночь</span>`;
   popupElement.querySelector('.popup__type').textContent = popupTypes[point.offer.type];
@@ -138,7 +138,7 @@ const createMarker = (element) => {
 const showMessage = () => {};
 
 const offers = (ads) => {
-  console.log(ads);
+  //console.log(ads);
   ads.forEach((element) => {
     createMarker(element);
   });
