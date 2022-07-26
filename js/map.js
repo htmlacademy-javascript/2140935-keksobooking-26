@@ -60,8 +60,6 @@ const popupTypes = {
   hotel:  'Отель'
 };
 
-
-
 const createCustomPopup = (point) => {
   const balloonTemplate = document.querySelector('#card').content.querySelector('.popup');
   const popupElement = balloonTemplate.cloneNode(true);
@@ -88,7 +86,7 @@ const createCustomPopup = (point) => {
       );
 
       if (!isNecessary) {
-       featuresListItem.remove();
+        featuresListItem.remove();
       }
     });
   }
@@ -134,7 +132,7 @@ const createMarker = (element) => {
 const showMessage = () => {};
 
 const offers = (ads) => {
-  console.log(ads);
+  //console.log(ads);
   ads.forEach((element) => {
     createMarker(element);
   });

@@ -199,7 +199,6 @@ timeOut.addEventListener('change', () => {
 // noUiSlider
 const sliderElement = adForm.querySelector('.ad-form__slider');
 const valueElement = adForm.querySelector('#price');
-const startValue = minAmount[typeField[typeField.selectedIndex].textContent];
 
 // Валидация слайдера
 noUiSlider.create(sliderElement,{
