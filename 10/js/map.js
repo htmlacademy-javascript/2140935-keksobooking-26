@@ -66,6 +66,7 @@ const createCustomPopup = (point) => {
 
   popupElement.querySelector('img').src = point.author.avatar;
   popupElement.querySelector('.popup__title').textContent = point.offer.title;
+  console.log(point.offer.title);
   popupElement.querySelector('.popup__text--address').textContent = `Координаты: ${point.location.lat}, ${point.location.lng}`;
   popupElement.querySelector('.popup__text--price').innerHTML = `${point.offer.price} <span>₽/ночь</span>`;
   popupElement.querySelector('.popup__type').textContent = popupTypes[point.offer.type];
@@ -98,12 +99,17 @@ const createCustomPopup = (point) => {
   }
   //фотографии.
   const popupPhoto = popupElement.querySelector('.popup__photo');
-  popupPhoto.src = point.offer.photos[0];
   const popupPhotos = popupElement.querySelector('.popup__photos');
-  for (let j = 1; j < point.offer.photos.length; j++) {
-    const clonedPhoto = popupPhoto.cloneNode(true);
-    clonedPhoto.src = point.offer.photos[j];
-    popupPhotos.appendChild(clonedPhoto);
+
+  if (point.offer.photos === undefined) {
+    popupPhotos.remove();
+  } else {
+    popupPhoto.src = point.offer.photos[0];
+    for (let j = 1; j < point.offer.photos.length; j++) {
+      const clonedPhoto = popupPhoto.cloneNode(true);
+      clonedPhoto.src = point.offer.photos[j];
+      popupPhotos.appendChild(clonedPhoto);
+    }
   }
   return popupElement;
 };
@@ -132,7 +138,7 @@ const createMarker = (element) => {
 const showMessage = () => {};
 
 const offers = (ads) => {
-  //console.log(ads);
+  console.log(ads);
   ads.forEach((element) => {
     createMarker(element);
   });
