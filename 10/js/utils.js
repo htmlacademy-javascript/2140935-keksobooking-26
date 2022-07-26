@@ -40,7 +40,7 @@ const successAlert = () => {
   const successElement = tplSuccess.cloneNode(true);
   document.body.append(successElement);
 
-  document.addEventListener('keydown', function(evt) {
+  document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       successElement.remove();
     }
@@ -63,7 +63,7 @@ const errorAlert = () => {
   errorElement.appendChild(errorMessage);
   errorElement.appendChild(btn);
 
-  document.addEventListener('keydown', function(evt) {
+  document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       errorElement.remove();
     }
