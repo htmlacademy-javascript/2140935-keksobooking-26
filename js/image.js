@@ -17,10 +17,10 @@ avatarFileChooser.addEventListener('change', () => {
   }
 });
 
-// Фотографии жилья
+// Фотографии жилья (выводится одна в превью, а хотелось бы много)
 const fileChooser = document.querySelector('#images');
 const preview = document.querySelector('#img-preview');
-const adFormFoto = document.querySelector('ad-form__photo');
+//const adFormFoto = document.querySelector('ad-form__photo');
 
 fileChooser.addEventListener('change', () => {
   const file = fileChooser.files[0];
