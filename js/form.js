@@ -1,4 +1,5 @@
 import './preview.js';
+import {sendData} from './data.js';
 /*formInactive
 1. Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
 2. Все интерактивные элементы формы .ad-form должны быть заблокированы с помощью атрибута
@@ -167,8 +168,20 @@ pristine.addValidator(capacityField, validateCapacity, getRoomErrorMessage);
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    adForm.submit();
+    sendData(
+      //тут функция onSuccess
+      () => {
+        //Показываем окно об успешной отправке
+        evt.target.reset();
+      },
+      //тут у нас функция onFail
+      () => {
+        //Показываем окно об неуспешной отправке
+      },
+      new FormData(evt.target),
+    );
   }
+
 });
 
 // Синхронизация заезда / выезда
@@ -186,14 +199,15 @@ timeOut.addEventListener('change', () => {
 // noUiSlider
 const sliderElement = adForm.querySelector('.ad-form__slider');
 const valueElement = adForm.querySelector('#price');
-const startValue = parseInt(minAmount[typeField[typeField.selectedIndex].textContent], 10);
+const startValue = minAmount[typeField[typeField.selectedIndex].textContent];
 
-noUiSlider.create(sliderElement, {
+// Валидация слайдера
+noUiSlider.create(sliderElement,{
   range: {
     min: 0,
     max: 100000,
   },
-  start: startValue,
+  start: 0,
   step: 1,
   connect: 'lower',
   format: {
@@ -203,7 +217,7 @@ noUiSlider.create(sliderElement, {
     from: function (value) {
       return parseFloat(value);
     },
-  }
+  },
 });
 
 sliderElement.noUiSlider.on('update', () => {
@@ -212,7 +226,8 @@ sliderElement.noUiSlider.on('update', () => {
 
 valueElement.addEventListener('input', (evt) => {
   sliderElement.noUiSlider.set(evt.target.value);
-  pristine.validate(sliderElement);
+  pristine.validate(sliderElement );
 });
+
 
 export {formInactive, formActive};

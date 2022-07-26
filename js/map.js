@@ -1,7 +1,5 @@
 import {formInactive, formActive} from './form.js';
-import {generateAds} from './data.js';
-const offers = generateAds();
-
+import {getData} from './data.js';
 formInactive();
 
 const map = L.map('map-canvas')
@@ -62,6 +60,8 @@ const popupTypes = {
   hotel:  'Отель'
 };
 
+
+
 const createCustomPopup = (point) => {
   const balloonTemplate = document.querySelector('#card').content.querySelector('.popup');
   const popupElement = balloonTemplate.cloneNode(true);
@@ -74,20 +74,23 @@ const createCustomPopup = (point) => {
   popupElement.querySelector('.popup__text--capacity').textContent = `${point.offer.rooms} комнаты для ${point.offer.guests} гостей`;
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${point.offer.checkin}, выезд до ${point.offer.checkout}`;
   //features
-  const popupFeatures = point.offer.features;
-  const featuresContainer = popupElement.querySelector('.popup__features');
-  const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-  featuresList.forEach((featuresListItem) => {
-    const isNecessary = popupFeatures.some(
-      (popupFeature) => featuresListItem.classList.contains(`popup__feature--${popupFeature}`),
-    );
-
-    if (!isNecessary) {
-      featuresListItem.remove();
-    }
-  });
-  if (popupFeatures.length === 0) {
+  //вот тут все ломается так как point.offer.features undefined
+  if (point.offer.features === undefined) {
+    const featuresContainer = popupElement.querySelector('.popup__features');
     featuresContainer.remove();
+  } else {
+    const popupFeatures = point.offer.features;
+    const featuresContainer = popupElement.querySelector('.popup__features');
+    const featuresList = featuresContainer.querySelectorAll('.popup__feature');
+    featuresList.forEach((featuresListItem) => {
+      const isNecessary = popupFeatures.some(
+        (popupFeature) => featuresListItem.classList.contains(`popup__feature--${popupFeature}`),
+      );
+
+      if (!isNecessary) {
+       featuresListItem.remove();
+      }
+    });
   }
   //description
   const popupDescription = popupElement.querySelector('.popup__description');
@@ -103,9 +106,6 @@ const createCustomPopup = (point) => {
     const clonedPhoto = popupPhoto.cloneNode(true);
     clonedPhoto.src = point.offer.photos[j];
     popupPhotos.appendChild(clonedPhoto);
-  }
-  if (point.offer.photos.length === 0) {
-    popupPhotos.remove();
   }
   return popupElement;
 };
@@ -131,9 +131,14 @@ const createMarker = (element) => {
     .addTo(markerGroup)
     .bindPopup(createCustomPopup(element));
 };
+const showMessage = () => {};
 
-offers.forEach((element) => {
-  createMarker(element);
-});
+const offers = (ads) => {
+  console.log(ads);
+  ads.forEach((element) => {
+    createMarker(element);
+  });
+};
 
+getData(offers, showMessage);
 //markerGroup.clearLayers();
