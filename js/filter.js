@@ -101,7 +101,7 @@ const mainFilter = (ads) => {
       filterGroup.clearLayers();
     }
 
-    // вывожу на карту
+    // вывожу на карту их
 
     filterGroup = L.layerGroup().addTo(map);
 
