@@ -107,7 +107,39 @@ const mainFilter = (ads) => {
     const filterReturn = conditionerStep.slice(0, MAP_ADS_COUNT);
     console.log(filterReturn);
     markerGroup.clearLayers();
+    /*
+    if (filterGroup) {
+      filterGroup.clearLayers();
+    }
+    // пытаюсь вывести на карту, не выводится
+
+    filterGroup = L.layerGroup().addTo(map);
+
+    const createMarker = (element) => {
+      const randomLat = element.location.lat;
+      const randomLng = element.location.lng;
+
+      const pinMarker = L.marker(
+       {
+          lat: randomLat,
+          lng: randomLng,
+        },
+       {
+          draggable: false,
+          icon: pinIcon,
+        },
+      );
+
+      pinMarker
+        .addTo(filterGroup)
+        .bindPopup(createCustomPopup(element));
+    };
+
+    filterReturn.forEach((element) => {
+      createMarker(element);
+    });*/
   });
+
 
   priceSelector.addEventListener('change', () => {
     const typeValue = typeSelector[typeSelector.selectedIndex].value;
