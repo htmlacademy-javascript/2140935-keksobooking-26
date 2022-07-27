@@ -94,7 +94,7 @@ const mainFilter = (ads) => {
     const elevatorValue = elevatorCheckbox.checked;
     const conditionerValue = conditionerCheckbox.checked;
     // фильтрация по типу жилья
-    const typeStep = priceFunction(ads, typeValue);
+    const typeStep = typeFunction(ads, typeValue);
     const priceStep = priceFunction(typeStep, priceValue);
     const roomStep = roomFunction(priceStep, roomValue);
     const guestStep = guestFunction(roomStep, guestValue);
@@ -107,38 +107,6 @@ const mainFilter = (ads) => {
     const filterReturn = conditionerStep.slice(0, MAP_ADS_COUNT);
     console.log(filterReturn);
     markerGroup.clearLayers();
-    /*
-    if (filterGroup) {
-      filterGroup.clearLayers();
-    }
-    // пытаюсь вывести на карту, не выводится
-
-    filterGroup = L.layerGroup().addTo(map);
-
-    const createMarker = (element) => {
-      const randomLat = element.location.lat;
-      const randomLng = element.location.lng;
-
-      const pinMarker = L.marker(
-       {
-          lat: randomLat,
-          lng: randomLng,
-        },
-       {
-          draggable: false,
-          icon: pinIcon,
-        },
-      );
-
-      pinMarker
-        .addTo(filterGroup)
-        .bindPopup(createCustomPopup(element));
-    };
-
-    filterReturn.forEach((element) => {
-      createMarker(element);
-    });*/
-
   });
 
   priceSelector.addEventListener('change', () => {
