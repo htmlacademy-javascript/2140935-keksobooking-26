@@ -76,7 +76,7 @@ const createCustomPopup = (point) => {
   popupElement.querySelector('.popup__text--capacity').textContent = `${point.offer.rooms} комнаты для ${point.offer.guests} гостей`;
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${point.offer.checkin}, выезд до ${point.offer.checkout}`;
   //features
-   if (point.offer.features === undefined) {
+    if (point.offer.features === undefined) {
     const featuresContainer = popupElement.querySelector('.popup__features');
     featuresContainer.remove();
   } else {

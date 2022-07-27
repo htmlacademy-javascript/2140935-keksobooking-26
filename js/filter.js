@@ -49,13 +49,6 @@ const roomFunction = (lastArray, value) => {
   return step;
 };
 
-const guestFunction = (lastArray, value) => {
-  let step = lastArray.slice();
-  if (value !== 'any') {
-    step = lastArray.filter((val)=>val.offer.guests === value);
-  }
-  return step;
-};
 
 const priceFunction = (lastArray, value) => {
   let step = lastArray.slice();
@@ -99,12 +92,6 @@ const mainFilter = (ads) => {
     const priceValue = priceSelector[priceSelector.selectedIndex].value;
     const roomValue = roomSelector[roomSelector.selectedIndex].value;
     const guestValue = guestSelector[guestSelector.selectedIndex].value;
-    const wifiValue = wifiCheckbox.checked;
-    const dishwasherValue = dishwasherCheckbox.checked;
-    const parkingValue = parkingCheckbox.checked;
-    const washerValue = washerCheckbox.checked;
-    const elevatorValue = elevatorCheckbox.checked;
-    const conditionerValue = conditionerCheckbox.checked;
     let finalReturn;
 
     const filterSmall = () => {
@@ -160,5 +147,6 @@ const mainFilter = (ads) => {
   }));
 
 };
+const showError = () => {};
 
-getData(mainFilter);
+getData(mainFilter, showError);
