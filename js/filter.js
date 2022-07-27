@@ -1,5 +1,5 @@
 import {getData} from './api.js';
-import {map, markerGroup, createCustomPopup, MAP_ADS_COUNT} from './map.js';
+import {map, markerGroup, createCustomPopup, pinIcon, MAP_ADS_COUNT} from './map.js';
 
 const typeSelector = document.querySelector('#housing-type');
 const priceSelector = document.querySelector('#housing-price');
@@ -11,6 +11,7 @@ const parkingCheckbox = document.querySelector('#filter-parking');
 const washerCheckbox = document.querySelector('#filter-washer');
 const elevatorCheckbox = document.querySelector('#filter-elevator');
 const conditionerCheckbox = document.querySelector('#filter-conditioner');
+let filterGroup;
 
 // Функции фильтрации
 const typeFunction = function (lastArray, value) {
@@ -106,9 +107,10 @@ const adsList = (ads) => {
     const filterReturn = conditionerStep.slice(0, MAP_ADS_COUNT);
     console.log(filterReturn);
     markerGroup.clearLayers();
+    filterGroup.clearLayers();
     // пытаюсь вывести на карту, не выводится
 
-    const filterGroup = L.layerGroup().addTo(map);
+    filterGroup = L.layerGroup().addTo(map);
 
     const createMarker = (element) => {
       const randomLat = element.location.lat;
@@ -125,16 +127,14 @@ const adsList = (ads) => {
         },
       );
 
-    pinMarker
-      .addTo(filterGroup)
-      .bindPopup(createCustomPopup(element));
+      pinMarker
+        .addTo(filterGroup)
+        .bindPopup(createCustomPopup(element));
     };
 
-    const offers = (filterReturn) => {
-      filterReturn.forEach((element) => {
-        createMarker(element);
+    filterReturn.forEach((element) => {
+      createMarker(element);
     });
-    };
 
   });
 

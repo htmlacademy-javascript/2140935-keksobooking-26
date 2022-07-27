@@ -67,7 +67,7 @@ const createCustomPopup = (point) => {
   const popupElement = balloonTemplate.cloneNode(true);
   popupElement.querySelector('img').src = point.author.avatar;
   popupElement.querySelector('.popup__title').textContent = point.offer.title;
-  popupElement.querySelector('.popup__text--address').textContent = `Координаты: ${point.location.lat}, ${point.location.lng}`;
+  popupElement.querySelector('.popup__text--address').textContent = point.offer.address;
   popupElement.querySelector('.popup__text--price').innerHTML = `${point.offer.price} <span>₽/ночь</span>`;
   popupElement.querySelector('.popup__type').textContent = popupTypes[point.offer.type];
   popupElement.querySelector('.popup__text--capacity').textContent = `${point.offer.rooms} комнаты для ${point.offer.guests} гостей`;
@@ -145,4 +145,4 @@ const offers = (ads) => {
 
 getData(offers, showMessage);
 
-export{map, markerGroup, createCustomPopup, MAP_ADS_COUNT};
+export{map, markerGroup, createCustomPopup, pinIcon, MAP_ADS_COUNT};
