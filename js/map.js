@@ -2,6 +2,8 @@ import {formInactive, formActive} from './form.js';
 import {getData} from './api.js';
 formInactive();
 
+const MAP_ADS_COUNT = 10;
+
 const map = L.map('map-canvas')
   .on('load', () => {
     formActive();
@@ -135,11 +137,12 @@ const createMarker = (element) => {
 const showMessage = () => {};
 
 const offers = (ads) => {
-  ads.forEach((element) => {
+  const limitedAds = ads.slice(0, MAP_ADS_COUNT);
+  limitedAds.forEach((element) => {
     createMarker(element);
   });
 };
 
 getData(offers, showMessage);
 
-export{map, markerGroup, createMarker, offers};
+export{map, markerGroup, createCustomPopup, MAP_ADS_COUNT};

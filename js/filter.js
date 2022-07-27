@@ -1,7 +1,6 @@
 import {getData} from './api.js';
-import {map, markerGroup, createMarker, offers} from './map.js';
+import {map, markerGroup, createCustomPopup, MAP_ADS_COUNT} from './map.js';
 
-const MAP_ADS_COUNT = 10;
 const typeSelector = document.querySelector('#housing-type');
 const priceSelector = document.querySelector('#housing-price');
 const roomSelector = document.querySelector('#housing-rooms');
@@ -107,9 +106,36 @@ const adsList = (ads) => {
     const filterReturn = conditionerStep.slice(0, MAP_ADS_COUNT);
     console.log(filterReturn);
     markerGroup.clearLayers();
-    const typeFilterGroup = L.layerGroup().addTo(map);
-    createMarker();
-    offers();
+    // пытаюсь вывести на карту, не выводится
+
+    const filterGroup = L.layerGroup().addTo(map);
+
+    const createMarker = (element) => {
+      const randomLat = element.location.lat;
+      const randomLng = element.location.lng;
+
+      const pinMarker = L.marker(
+       {
+          lat: randomLat,
+          lng: randomLng,
+        },
+       {
+          draggable: false,
+          icon: pinIcon,
+        },
+      );
+
+    pinMarker
+      .addTo(filterGroup)
+      .bindPopup(createCustomPopup(element));
+    };
+
+    const offers = (filterReturn) => {
+      filterReturn.forEach((element) => {
+        createMarker(element);
+    });
+    };
+
   });
 
   priceSelector.addEventListener('change', () => {
