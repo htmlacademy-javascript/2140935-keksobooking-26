@@ -1,4 +1,4 @@
-import {formInactive, formActive, filterInactive} from './utils.js';
+import {formInactive, formActive} from './utils.js';
 import {getData} from './api.js';
 
 const MAP_ADS_COUNT = 10;
@@ -147,6 +147,6 @@ const offers = (ads) => {
   });
 };
 
-getData(offers, showMessage, filterInactive);
+getData(offers, showMessage);
 
 export{map, markerGroup, createCustomPopup, pinIcon, MAP_ADS_COUNT};

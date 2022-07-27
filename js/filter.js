@@ -28,32 +28,34 @@ let filterGroup;
 const typeFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter(function(val) {
-    return val.offer.type == value;
-    });
+    step = lastArray.filter((val)=>val.offer.type === value);
   }
   return step;
-}
-
-const roomFunction = (lastArray, value) => {
-  let step = lastArray.slice();
-  if (value !== 'any') {
-    step = lastArray.filter(function(val) {
-    return val.offer.rooms == value;
-    });
-  }
-  return step;
-}
+};
 
 const guestFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter(function(val) {
-    return val.offer.guests == value;
-    });
+    step = lastArray.filter((val)=>val.offer.guests === value);
   }
   return step;
-}
+};
+
+const roomFunction = (lastArray, value) => {
+  let step = lastArray.slice();
+  if (value !== 'any') {
+    step = lastArray.filter((val)=>val.offer.rooms === value);
+  }
+  return step;
+};
+
+const guestFunction = (lastArray, value) => {
+  let step = lastArray.slice();
+  if (value !== 'any') {
+    step = lastArray.filter((val)=>val.offer.guests === value);
+  }
+  return step;
+};
 
 const priceFunction = (lastArray, value) => {
   let step = lastArray.slice();
@@ -92,7 +94,7 @@ const featuresFunction = (lastArray, featuresList) => {
 
 // Фильтр
 const mainFilter = (ads) => {
-  filterform.addEventListener('change', (evt) => {
+  filterform.addEventListener('change', debounce((evt) => {
     const typeValue = typeSelector[typeSelector.selectedIndex].value;
     const priceValue = priceSelector[priceSelector.selectedIndex].value;
     const roomValue = roomSelector[roomSelector.selectedIndex].value;
@@ -155,7 +157,7 @@ const mainFilter = (ads) => {
       createMarker(element);
     });
 
-  });
+  }));
 
 };
 
