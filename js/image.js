@@ -5,7 +5,7 @@ const avatarPreview = document.querySelector('#img-preview-avatar');
 const fileChooser = document.querySelector('#images');
 const preview = document.querySelector('#img-preview');
 
-// Аватар
+// Аватар фото
 avatarFileChooser.addEventListener('change', () => {
   const file = avatarFileChooser.files[0];
   const fileName = file.name.toLowerCase();
