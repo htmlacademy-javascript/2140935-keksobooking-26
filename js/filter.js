@@ -12,6 +12,7 @@ const parkingCheckbox = document.querySelector('#filter-parking');
 const washerCheckbox = document.querySelector('#filter-washer');
 const elevatorCheckbox = document.querySelector('#filter-elevator');
 const conditionerCheckbox = document.querySelector('#filter-conditioner');
+let filterGroup;
 
 // Функции фильтрации
 const typeFunction = (lastArray, value) => {
@@ -129,6 +130,44 @@ const mainFilter = (ads) => {
     finalReturn = finalReturn.slice(0, MAP_ADS_COUNT);
     console.log(evt.target.id);
     console.log(finalReturn);
+
+    // удаляю старые слои
+    if (markerGroup) {
+      markerGroup.clearLayers();
+    }
+
+    if (filterGroup) {
+      filterGroup.clearLayers();
+    }
+
+    // вывожу на карту
+
+    filterGroup = L.layerGroup().addTo(map);
+
+    const createMarker = (element) => {
+      const randomLat = element.location.lat;
+      const randomLng = element.location.lng;
+
+      const pinMarker = L.marker(
+       {
+          lat: randomLat,
+          lng: randomLng,
+        },
+       {
+          draggable: false,
+          icon: pinIcon,
+        },
+      );
+
+      pinMarker
+        .addTo(filterGroup)
+        .bindPopup(createCustomPopup(element));
+    };
+
+    finalReturn.forEach((element) => {
+      createMarker(element);
+    });
+
   });
 
 };
