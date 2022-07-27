@@ -23,7 +23,7 @@ let filterGroup;
 const typeFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter((val)=>val.offer.type === value);
+    step = lastArray.filter((val) => val.offer.type === value);
   }
   return step;
 };
@@ -31,7 +31,7 @@ const typeFunction = (lastArray, value) => {
 const guestFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter((val)=>val.offer.guests === value);
+    step = lastArray.filter((val)=>val.offer.guests === Number(value));
   }
   return step;
 };
@@ -39,7 +39,7 @@ const guestFunction = (lastArray, value) => {
 const roomFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter((val)=>val.offer.rooms === value);
+    step = lastArray.filter((val)=>val.offer.rooms === Number(value));
   }
   return step;
 };
@@ -47,16 +47,16 @@ const roomFunction = (lastArray, value) => {
 const priceFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value === 'low') {
-    step = lastArray.filter((val)=> val.offer.price < '10000');
+    step = lastArray.filter((val) => val.offer.price < '10000');
   }
   if (value === 'middle') {
-    step = lastArray.filter((val)=> '10000' <= val.offer.price && val.offer.price < '50000');
-  }
+    step = lastArray.filter((val) => '10000' <= val.offer.price && val.offer.price < '50000');
+  };
   if (value === 'high') {
-    step = lastArray.filter((val)=> val.offer.price >= '50000');
+    step = lastArray.filter((val) => val.offer.price >= '50000');
   }
   return step;
-};
+}
 
 const featuresFunction = (lastArray, featuresList) => {
   const step = lastArray.filter((val) => {
