@@ -1,39 +1,74 @@
-// функция вывода случайного целого из диапазона включительно
-function getRandomPositiveInteger (a, b) {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-}
+const filterInactive = function() {
 
-// функция возврата случайного числа с плавающей точкой из диапазона включительно
-function getRandomPositiveFloat (a, b, digits = 1) {
-  const lower = Math.min(Math.abs(a), Math.abs(b));
-  const upper = Math.max(Math.abs(a), Math.abs(b));
-  const result = Math.random() * (upper - lower) + lower;
-  return +result.toFixed(digits);
-}
+  const mapFilters = document.querySelector('.map__filters');
+  mapFilters.classList.add('map__filters--disabled');
 
-// функция проверки, есть ли число в массиве, если есть false
-const compare = function(item, array) {
-  for (let j = 0; j < array.length; j++) {
-    if (item === array[j]) {
-      return false;
-    }
+  const selectAll = mapFilters.querySelectorAll('select');
+  for (const selectElement of selectAll) {
+    selectElement.setAttribute('disabled', 'disabled');
   }
-  return true;
+
+  const mapFiltersFieldsetAll = mapFilters.querySelectorAll('fieldset');
+  for (const mapFiltersFieldset of mapFiltersFieldsetAll) {
+    mapFiltersFieldset.setAttribute('disabled', 'disabled');
+  }
+
 };
 
-// функция генерации булева массива случайных ключей
-const booleanRandomArray = function (quantity) {
-  const array = [];
-  for (let j = 0; j < quantity; j++) {
-    array[j] = getRandomPositiveInteger(0, 1);
+const formInactive = function() {
+
+  const adFormActive = document.querySelector('.ad-form');
+  adFormActive.classList.add('ad-form--disabled');
+
+  const inputAll = adFormActive.querySelectorAll('input');
+  for (const inputElement of inputAll) {
+    inputElement.setAttribute('disabled', 'disabled');
   }
-  return array;
+
+  const adFormFieldsetAll = adFormActive.querySelectorAll('fieldset');
+  for (const fieldsetElement of adFormFieldsetAll) {
+    fieldsetElement.setAttribute('disabled', 'disabled');
+  }
+
+  const mapFilters = document.querySelector('.map__filters');
+  mapFilters.classList.add('map__filters--disabled');
+
+  const selectAll = mapFilters.querySelectorAll('select');
+  for (const selectElement of selectAll) {
+    selectElement.setAttribute('disabled', 'disabled');
+  }
+
+  const mapFiltersFieldsetAll = mapFilters.querySelectorAll('fieldset');
+  for (const mapFiltersFieldset of mapFiltersFieldsetAll) {
+    mapFiltersFieldset.setAttribute('disabled', 'disabled');
+  }
+
 };
 
-// алерты
+const formActive = function() {
+
+  const adFormDisabled = document.querySelector('.ad-form');
+  adFormDisabled.classList.remove('ad-form--disabled');
+
+  const inputDisabledAll = document.querySelectorAll('input[disabled]');
+  for (const inputDisabled of inputDisabledAll) {
+    inputDisabled.removeAttribute('disabled');
+  }
+
+  const fieldsetDisabledAll = document.querySelectorAll('fieldset[disabled]');
+  for (const fieldsetDisabled of fieldsetDisabledAll) {
+    fieldsetDisabled.removeAttribute('disabled');
+  }
+
+  const mapFiltersDisabled = document.querySelector('.map__filters');
+  mapFiltersDisabled.classList.remove('map__filters--disabled');
+
+  const selectDisabledAll = document.querySelectorAll('select[disabled]');
+  for (const selectDisabled of selectDisabledAll) {
+    selectDisabled.removeAttribute('disabled');
+  }
+
+};
 
 const successAlert = () => {
   const tplSuccess = document.querySelector('#success').content.querySelector('.success');
@@ -88,4 +123,22 @@ const unblockSubmitButton = (button) => {
   button.textContent = 'Опубликовать';
 };
 
-export {getRandomPositiveInteger, getRandomPositiveFloat, compare, booleanRandomArray, successAlert, errorAlert, blockSubmitButton, unblockSubmitButton};
+function debounce (callback, timeoutDelay = 500) {
+  // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
+  // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
+  let timeoutId;
+
+  return (...rest) => {
+    // Перед каждым новым вызовом удаляем предыдущий таймаут,
+    // чтобы они не накапливались
+    clearTimeout(timeoutId);
+
+    // Затем устанавливаем новый таймаут с вызовом колбэка на ту же задержку
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+    // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
+    // пока действие совершается чаще, чем переданная задержка timeoutDelay
+  };
+}
+
+export {formInactive, formActive, successAlert, errorAlert, blockSubmitButton, unblockSubmitButton, debounce, filterInactive};
