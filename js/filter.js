@@ -11,10 +11,10 @@ const parkingCheckbox = document.querySelector('#filter-parking');
 const washerCheckbox = document.querySelector('#filter-washer');
 const elevatorCheckbox = document.querySelector('#filter-elevator');
 const conditionerCheckbox = document.querySelector('#filter-conditioner');
-let filterGroup;
+//let filterGroup;
 
 // Функции фильтрации
-const typeFunction = function (lastArray, value) {
+const typeFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
     step = lastArray.filter(function(val) {
@@ -24,7 +24,7 @@ const typeFunction = function (lastArray, value) {
   return step;
 }
 
-const roomFunction = function (lastArray, value) {
+const roomFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
     step = lastArray.filter(function(val) {
@@ -34,7 +34,7 @@ const roomFunction = function (lastArray, value) {
   return step;
 }
 
-const guestFunction = function (lastArray, value) {
+const guestFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
     step = lastArray.filter(function(val) {
@@ -44,19 +44,19 @@ const guestFunction = function (lastArray, value) {
   return step;
 }
 
-const priceFunction = function (lastArray, value) {
+const priceFunction = (lastArray, value) => {
   let step = lastArray.slice();
-  if (value == 'low') {
+  if (value === 'low') {
     step = lastArray.filter(function(val) {
       return val.offer.price < '10000';
     });
   }
-  if (value == 'middle') {
+  if (value === 'middle') {
     step = lastArray.filter(function(val) {
       return '10000' <= val.offer.price < '50000';
     });
   }
-  if (value == 'high') {
+  if (value === 'high') {
     step = lastArray.filter(function(val) {
       return val.offer.price >= '50000';
     });
@@ -64,7 +64,7 @@ const priceFunction = function (lastArray, value) {
   return step;
 }
 
-const featuresFunction = function (lastArray, featValue, featName) {
+const featuresFunction = (lastArray, featValue, featName) => {
   let step;
   if (!featValue) {
     step = lastArray.slice();
@@ -73,14 +73,14 @@ const featuresFunction = function (lastArray, featValue, featName) {
     return val.offer.features !== undefined;
     });
     step = nonUndefined.filter(function(val) {
-      return (val.offer.features[0] == featName || val.offer.features[1] == featName || val.offer.features[2] == featName || val.offer.features[3] == featName || val.offer.features[4] == featName || val.offer.features[5] == featName);
+      return (val.offer.features[0] === featName || val.offer.features[1] === featName || val.offer.features[2] === featName || val.offer.features[3] === featName || val.offer.features[4] === featName || val.offer.features[5] === featName);
     });
   }
   return step;
 }
 
 // Фильтры
-const adsList = (ads) => {
+const mainFilter = (ads) => {
 
   typeSelector.addEventListener('change', () => {
     const typeValue = typeSelector[typeSelector.selectedIndex].value;
@@ -107,7 +107,10 @@ const adsList = (ads) => {
     const filterReturn = conditionerStep.slice(0, MAP_ADS_COUNT);
     console.log(filterReturn);
     markerGroup.clearLayers();
-    filterGroup.clearLayers();
+    /*
+    if (filterGroup) {
+      filterGroup.clearLayers();
+    }
     // пытаюсь вывести на карту, не выводится
 
     filterGroup = L.layerGroup().addTo(map);
@@ -134,7 +137,7 @@ const adsList = (ads) => {
 
     filterReturn.forEach((element) => {
       createMarker(element);
-    });
+    });*/
 
   });
 
@@ -373,4 +376,4 @@ const adsList = (ads) => {
   });
 };
 
-getData(adsList);
+getData(mainFilter);
