@@ -1,6 +1,6 @@
 import {getData} from './api.js';
 import {map, markerGroup, createCustomPopup, pinIcon, MAP_ADS_COUNT} from './map.js';
-import {debounce} from  './utils.js';
+import {debounce} from './utils.js';
 
 const filterform = document.querySelector('.map__filters');
 const typeSelector = document.querySelector('#housing-type');
