@@ -1,9 +1,11 @@
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-// Аватар
 const avatarFileChooser = document.querySelector('#avatar');
 const avatarPreview = document.querySelector('#img-preview-avatar');
+const fileChooser = document.querySelector('#images');
+const preview = document.querySelector('#img-preview');
 
+// Аватар
 avatarFileChooser.addEventListener('change', () => {
   const file = avatarFileChooser.files[0];
   const fileName = file.name.toLowerCase();
@@ -13,11 +15,7 @@ avatarFileChooser.addEventListener('change', () => {
   }
 });
 
-// Фотографии жилья (выводится одна в превью, а хотелось бы много)
-const fileChooser = document.querySelector('#images');
-const preview = document.querySelector('#img-preview');
-//const adFormFoto = document.querySelector('ad-form__photo');
-
+// Фото объявления
 fileChooser.addEventListener('change', () => {
   const file = fileChooser.files[0];
   const fileName = file.name.toLowerCase();

@@ -1,9 +1,12 @@
-import {formInactive, formActive} from './form.js';
+import {formInactive, formActive} from './utils.js';
 import {getData} from './api.js';
-formInactive();
 
 const MAP_ADS_COUNT = 10;
 
+// при старте inactive
+formInactive();
+
+// инициализация
 const map = L.map('map-canvas')
   .on('load', () => {
     formActive();
@@ -90,6 +93,7 @@ const createCustomPopup = (point) => {
       }
     });
   }
+
   //description
   const popupDescription = popupElement.querySelector('.popup__description');
   popupDescription.textContent = point.offer.description;

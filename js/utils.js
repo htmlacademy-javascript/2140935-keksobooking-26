@@ -1,3 +1,58 @@
+const formInactive = function() {
+
+  const adFormActive = document.querySelector('.ad-form');
+  adFormActive.classList.add('ad-form--disabled');
+
+  const inputAll = adFormActive.querySelectorAll('input');
+  for (const inputElement of inputAll) {
+    inputElement.setAttribute('disabled', 'disabled');
+  }
+
+  const adFormFieldsetAll = adFormActive.querySelectorAll('fieldset');
+  for (const fieldsetElement of adFormFieldsetAll) {
+    fieldsetElement.setAttribute('disabled', 'disabled');
+  }
+
+  const mapFilters = document.querySelector('.map__filters');
+  mapFilters.classList.add('map__filters--disabled');
+
+  const selectAll = mapFilters.querySelectorAll('select');
+  for (const selectElement of selectAll) {
+    selectElement.setAttribute('disabled', 'disabled');
+  }
+
+  const mapFiltersFieldsetAll = mapFilters.querySelectorAll('fieldset');
+  for (const mapFiltersFieldset of mapFiltersFieldsetAll) {
+    mapFiltersFieldset.setAttribute('disabled', 'disabled');
+  }
+
+};
+
+const formActive = function() {
+
+  const adFormDisabled = document.querySelector('.ad-form');
+  adFormDisabled.classList.remove('ad-form--disabled');
+
+  const inputDisabledAll = document.querySelectorAll('input[disabled]');
+  for (const inputDisabled of inputDisabledAll) {
+    inputDisabled.removeAttribute('disabled');
+  }
+
+  const fieldsetDisabledAll = document.querySelectorAll('fieldset[disabled]');
+  for (const fieldsetDisabled of fieldsetDisabledAll) {
+    fieldsetDisabled.removeAttribute('disabled');
+  }
+
+  const mapFiltersDisabled = document.querySelector('.map__filters');
+  mapFiltersDisabled.classList.remove('map__filters--disabled');
+
+  const selectDisabledAll = document.querySelectorAll('select[disabled]');
+  for (const selectDisabled of selectDisabledAll) {
+    selectDisabled.removeAttribute('disabled');
+  }
+
+};
+
 const successAlert = () => {
   const tplSuccess = document.querySelector('#success').content.querySelector('.success');
   const successElement = tplSuccess.cloneNode(true);
@@ -90,4 +145,4 @@ function throttle (callback, delayBetweenFrames) {
   };
 }
 
-export {successAlert, errorAlert, blockSubmitButton, unblockSubmitButton};
+export {formInactive, formActive, successAlert, errorAlert, blockSubmitButton, unblockSubmitButton, debounce, throttle};
