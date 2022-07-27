@@ -1,5 +1,4 @@
-import './preview.js';
-import {sendData} from './data.js';
+import {sendData} from './api.js';
 import {successAlert, errorAlert, blockSubmitButton, unblockSubmitButton} from './utils.js';
 /*formInactive
 1. Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;

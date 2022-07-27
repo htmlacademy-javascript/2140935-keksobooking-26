@@ -1,5 +1,5 @@
 import {formInactive, formActive} from './form.js';
-import {getData} from './data.js';
+import {getData} from './api.js';
 formInactive();
 
 const map = L.map('map-canvas')
@@ -141,4 +141,5 @@ const offers = (ads) => {
 };
 
 getData(offers, showMessage);
-//markerGroup.clearLayers();
+
+export{map, markerGroup, createMarker, offers};
