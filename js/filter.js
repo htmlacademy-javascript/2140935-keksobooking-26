@@ -82,7 +82,7 @@ const featuresFunction = (lastArray, featValue, featName) => {
 // Фильтры
 const mainFilter = (ads) => {
 
-  typeSelector.addEventListener('change', () => {
+  /*typeSelector.addEventListener('change', () => {
     const typeValue = typeSelector[typeSelector.selectedIndex].value;
     const priceValue = priceSelector[priceSelector.selectedIndex].value;
     const roomValue = roomSelector[roomSelector.selectedIndex].value;
@@ -94,6 +94,7 @@ const mainFilter = (ads) => {
     const elevatorValue = elevatorCheckbox.checked;
     const conditionerValue = conditionerCheckbox.checked;
     // фильтрация по типу жилья
+    /*
     const typeStep = typeFunction(ads, typeValue);
     const priceStep = priceFunction(typeStep, priceValue);
     const roomStep = roomFunction(priceStep, roomValue);
@@ -107,7 +108,7 @@ const mainFilter = (ads) => {
     const filterReturn = conditionerStep.slice(0, MAP_ADS_COUNT);
     console.log(filterReturn);
     markerGroup.clearLayers();
-    /*
+
     if (filterGroup) {
       filterGroup.clearLayers();
     }
@@ -137,9 +138,25 @@ const mainFilter = (ads) => {
 
     filterReturn.forEach((element) => {
       createMarker(element);
-    });*/
-  });
+    });
+  });*/
 
+  typeSelector.addEventListener('change', () => {
+    const typeValue = typeSelector[typeSelector.selectedIndex].value;
+    const priceValue = priceSelector[priceSelector.selectedIndex].value;
+    const roomValue = roomSelector[roomSelector.selectedIndex].value;
+    const guestValue = guestSelector[guestSelector.selectedIndex].value;
+    const wifiValue = wifiCheckbox.checked;
+    const dishwasherValue = dishwasherCheckbox.checked;
+    const parkingValue = parkingCheckbox.checked;
+    const washerValue = washerCheckbox.checked;
+    const elevatorValue = elevatorCheckbox.checked;
+    const conditionerValue = conditionerCheckbox.checked;
+    // фильтрация по типу жилья
+    const filterReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(ads, typeValue), priceValue), roomValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner').slice(0, MAP_ADS_COUNT);
+    console.log(filterReturn);
+    markerGroup.clearLayers();
+  });
 
   priceSelector.addEventListener('change', () => {
     const typeValue = typeSelector[typeSelector.selectedIndex].value;
