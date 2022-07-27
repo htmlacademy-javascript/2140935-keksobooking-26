@@ -12,6 +12,16 @@ const parkingCheckbox = document.querySelector('#filter-parking');
 const washerCheckbox = document.querySelector('#filter-washer');
 const elevatorCheckbox = document.querySelector('#filter-elevator');
 const conditionerCheckbox = document.querySelector('#filter-conditioner');
+const features = () => {
+  const checkboxes = document.querySelectorAll('.map__checkbox');
+  const checkboxesChecked = [];
+  for (let index = 0; index < checkboxes.length; index++) {
+    if (checkboxes[index].checked) {
+      checkboxesChecked.push(checkboxes[index].value);
+    }
+  }
+  return checkboxesChecked;
+};
 let filterGroup;
 
 // Функции фильтрации
@@ -54,7 +64,7 @@ const priceFunction = (lastArray, value) => {
   }
   if (value === 'middle') {
     step = lastArray.filter(function(val) {
-      return '10000' <= val.offer.price < '50000';
+      return '10000' <= val.offer.price && val.offer.price < '50000';
     });
   }
   if (value === 'high') {
@@ -65,24 +75,23 @@ const priceFunction = (lastArray, value) => {
   return step;
 }
 
-const featuresFunction = (lastArray, featValue, featName) => {
-  let step;
-  if (!featValue) {
-    step = lastArray.slice();
-  } else {
-    const nonUndefined = lastArray.filter(function(val) {
-    return val.offer.features !== undefined;
+const featuresFunction = (lastArray, featuresList) => {
+  const step = lastArray.filter((val) => {
+    const current = val.offer.features;
+    let find = true;
+    featuresList.forEach((feature) => {
+      if((current===undefined || current.indexOf(feature)===-1)) {
+        find = false;
+      }
     });
-    step = nonUndefined.filter(function(val) {
-      return (val.offer.features[0] === featName || val.offer.features[1] === featName || val.offer.features[2] === featName || val.offer.features[3] === featName || val.offer.features[4] === featName || val.offer.features[5] === featName);
-    });
-  }
+    console.log(current);
+    return find;
+  });
   return step;
-}
+};
 
 // Фильтр
 const mainFilter = (ads) => {
-
   filterform.addEventListener('change', (evt) => {
     const typeValue = typeSelector[typeSelector.selectedIndex].value;
     const priceValue = priceSelector[priceSelector.selectedIndex].value;
@@ -96,39 +105,17 @@ const mainFilter = (ads) => {
     const conditionerValue = conditionerCheckbox.checked;
     let finalReturn;
 
-    if (evt.target.id === 'housing-type') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(ads, typeValue), priceValue), roomValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'housing-price') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(typeFunction(priceFunction(ads, priceValue), typeValue), roomValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'housing-rooms') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(priceFunction(typeFunction(roomFunction(ads, roomValue), typeValue), priceValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'housing-guests') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(roomFunction(priceFunction(typeFunction(guestFunction(ads, guestValue), typeValue), priceValue), roomValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'filter-wifi') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(featuresFunction(ads, wifiValue, 'wifi'), typeValue), priceValue), roomValue), guestValue), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'filter-dishwasher') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(featuresFunction(ads, dishwasherValue, 'dishwasher'), typeValue), priceValue), roomValue), guestValue), wifiValue, 'wifi'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'filter-parking') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(featuresFunction(ads, parkingValue, 'parking'), typeValue), priceValue), roomValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), washerValue, 'washer'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'filter-washer') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(featuresFunction(ads, washerValue, 'parking'), typeValue), priceValue), roomValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), elevatorValue, 'elevator'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'filter-elevator') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(featuresFunction(ads, elevatorValue, 'elevator'), typeValue), priceValue), roomValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), conditionerValue, 'conditioner');
-    }
-    if (evt.target.id === 'filter-conditioner') {
-      finalReturn = featuresFunction(featuresFunction(featuresFunction(featuresFunction(featuresFunction(guestFunction(roomFunction(priceFunction(typeFunction(featuresFunction(ads, conditionerValue, 'conditioner'), typeValue), priceValue), roomValue), guestValue), wifiValue, 'wifi'), dishwasherValue, 'dishwasher'), parkingValue, 'parking'), washerValue, 'washer'), elevatorValue, 'elevator');
-    }
-
+    const filterSmall = () => {
+      finalReturn = ads;
+      finalReturn = typeFunction(finalReturn, typeValue);
+      finalReturn = roomFunction(finalReturn, roomValue);
+      finalReturn = priceFunction(finalReturn, priceValue);
+      finalReturn = guestFunction(finalReturn, guestValue);
+      finalReturn = featuresFunction(finalReturn, features());
+    };
+    filterSmall();
     finalReturn = finalReturn.slice(0, MAP_ADS_COUNT);
-    console.log(evt.target.id);
+
     console.log(finalReturn);
 
     // удаляю старые слои

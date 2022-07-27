@@ -1,4 +1,4 @@
-const getData = (onSuccess, onFail) => {
+const getData = (onSuccess, onFail, onFailInactive) => {
   fetch('https://26.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((ads) => {
@@ -7,6 +7,7 @@ const getData = (onSuccess, onFail) => {
     })
     .catch(() => {
       onFail('ошибка загрузки');
+      onFailInactive();
     });
 };
 

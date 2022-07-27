@@ -1,3 +1,20 @@
+const filterInactive = function() {
+
+  const mapFilters = document.querySelector('.map__filters');
+  mapFilters.classList.add('map__filters--disabled');
+
+  const selectAll = mapFilters.querySelectorAll('select');
+  for (const selectElement of selectAll) {
+    selectElement.setAttribute('disabled', 'disabled');
+  }
+
+  const mapFiltersFieldsetAll = mapFilters.querySelectorAll('fieldset');
+  for (const mapFiltersFieldset of mapFiltersFieldsetAll) {
+    mapFiltersFieldset.setAttribute('disabled', 'disabled');
+  }
+
+};
+
 const formInactive = function() {
 
   const adFormActive = document.querySelector('.ad-form');
@@ -124,25 +141,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-function throttle (callback, delayBetweenFrames) {
-  // Используем замыкания, чтобы время "последнего кадра" навсегда приклеилось
-  // к возвращаемой функции с условием, тогда мы его сможем перезаписывать
-  let lastTime = 0;
-
-  return (...rest) => {
-    // Получаем текущую дату в миллисекундах,
-    // чтобы можно было в дальнейшем
-    // вычислять разницу между кадрами
-    const now = new Date();
-
-    // Если время между кадрами больше задержки,
-    // вызываем наш колбэк и перезаписываем lastTime
-    // временем "последнего кадра"
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
-
-export {formInactive, formActive, successAlert, errorAlert, blockSubmitButton, unblockSubmitButton, debounce, throttle};
+export {formInactive, formActive, successAlert, errorAlert, blockSubmitButton, unblockSubmitButton, debounce, filterInactive};
