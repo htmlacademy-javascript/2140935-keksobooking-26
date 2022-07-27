@@ -1,17 +1,12 @@
 import {getData} from './api.js';
 import {map, markerGroup, createCustomPopup, pinIcon, MAP_ADS_COUNT} from './map.js';
+import {debounce} from  './utils.js';
 
 const filterform = document.querySelector('.map__filters');
 const typeSelector = document.querySelector('#housing-type');
 const priceSelector = document.querySelector('#housing-price');
 const roomSelector = document.querySelector('#housing-rooms');
 const guestSelector = document.querySelector('#housing-guests');
-const wifiCheckbox = document.querySelector('#filter-wifi');
-const dishwasherCheckbox = document.querySelector('#filter-dishwasher');
-const parkingCheckbox = document.querySelector('#filter-parking');
-const washerCheckbox = document.querySelector('#filter-washer');
-const elevatorCheckbox = document.querySelector('#filter-elevator');
-const conditionerCheckbox = document.querySelector('#filter-conditioner');
 const features = () => {
   const checkboxes = document.querySelectorAll('.map__checkbox');
   const checkboxesChecked = [];
@@ -49,26 +44,19 @@ const roomFunction = (lastArray, value) => {
   return step;
 };
 
-
 const priceFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value === 'low') {
-    step = lastArray.filter(function(val) {
-      return val.offer.price < '10000';
-    });
+    step = lastArray.filter((val)=> val.offer.price < '10000');
   }
   if (value === 'middle') {
-    step = lastArray.filter(function(val) {
-      return '10000' <= val.offer.price && val.offer.price < '50000';
-    });
-  }
+    step = lastArray.filter((val)=> '10000' <= val.offer.price && val.offer.price < '50000');
+  };
   if (value === 'high') {
-    step = lastArray.filter(function(val) {
-      return val.offer.price >= '50000';
-    });
+    step = lastArray.filter((val)=> val.offer.price >= '50000');
   }
   return step;
-}
+};
 
 const featuresFunction = (lastArray, featuresList) => {
   const step = lastArray.filter((val) => {
@@ -79,7 +67,6 @@ const featuresFunction = (lastArray, featuresList) => {
         find = false;
       }
     });
-    console.log(current);
     return find;
   });
   return step;
@@ -87,7 +74,7 @@ const featuresFunction = (lastArray, featuresList) => {
 
 // Фильтр
 const mainFilter = (ads) => {
-  filterform.addEventListener('change', debounce((evt) => {
+  filterform.addEventListener('change', debounce(() => {
     const typeValue = typeSelector[typeSelector.selectedIndex].value;
     const priceValue = priceSelector[priceSelector.selectedIndex].value;
     const roomValue = roomSelector[roomSelector.selectedIndex].value;
@@ -104,8 +91,6 @@ const mainFilter = (ads) => {
     };
     filterSmall();
     finalReturn = finalReturn.slice(0, MAP_ADS_COUNT);
-
-    console.log(finalReturn);
 
     // удаляю старые слои
     if (markerGroup) {
@@ -125,11 +110,11 @@ const mainFilter = (ads) => {
       const randomLng = element.location.lng;
 
       const pinMarker = L.marker(
-       {
+        {
           lat: randomLat,
           lng: randomLng,
         },
-       {
+        {
           draggable: false,
           icon: pinIcon,
         },
