@@ -51,7 +51,7 @@ const priceFunction = (lastArray, value) => {
   }
   if (value === 'middle') {
     step = lastArray.filter((val)=> '10000' <= val.offer.price && val.offer.price < '50000');
-  };
+  }
   if (value === 'high') {
     step = lastArray.filter((val)=> val.offer.price >= '50000');
   }
