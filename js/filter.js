@@ -19,7 +19,7 @@ const features = () => {
 };
 let filterGroup;
 
-// Фильтрация тут
+// Функции фильтрации
 const typeFunction = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
