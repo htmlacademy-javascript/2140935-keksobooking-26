@@ -1,16 +1,16 @@
 import {sendData} from './api.js';
 import {successAlert, errorAlert, blockSubmitButton, unblockSubmitButton} from './utils.js';
 
-const adForm = document.querySelector('.ad-form');
-const submitButton = adForm.querySelector('.ad-form__submit');
-const typeField = adForm.querySelector('#type');
-const priceField = adForm.querySelector('#price');
-const roomField = adForm.querySelector('[name="rooms"]');
-const capacityField = adForm.querySelector('[name="capacity"]');
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
-const sliderElement = adForm.querySelector('.ad-form__slider');
-const valueElement = adForm.querySelector('#price');
+const adFormElement = document.querySelector('.ad-form');
+const submitButtonElement = adFormElement.querySelector('.ad-form__submit');
+const typeFieldElement = adFormElement.querySelector('#type');
+const priceFieldElement = adFormElement.querySelector('#price');
+const roomFieldElement = adFormElement.querySelector('[name="rooms"]');
+const capacityFieldElement = adFormElement.querySelector('[name="capacity"]');
+const timeInElement = adFormElement.querySelector('#timein');
+const timeOutElement = adFormElement.querySelector('#timeout');
+const sliderElement = adFormElement.querySelector('.ad-form__slider');
+const valueElement = adFormElement.querySelector('#price');
 
 const MIN_AMOUNT = {
   'Бунгало': 0,
@@ -33,71 +33,64 @@ const ROOM_OPTION = {
 };
 
 // Валидация тайтла
-const pristine = new Pristine(adForm, {
+const pristine = new Pristine(adFormElement, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
   errorTextClass: 'ad-form__label',
 });
 
-function validateTitle (value) {
-  return value.length >= 30 && value.length <= 100;
-}
+const validateTitle = (value) => value.length >= 30 && value.length <= 100;
 
 pristine.addValidator(
-  adForm.querySelector('#title'),
+  adFormElement.querySelector('#title'),
   validateTitle,
   'От 30 до 100 символов'
 );
 
 // Меняем плейсхолдер цены
-typeField.addEventListener('change', () => {
-  const type = typeField[typeField.selectedIndex].textContent;
-  priceField.placeholder = MIN_AMOUNT[type];
+typeFieldElement.addEventListener('change', () => {
+  const type = typeFieldElement[typeFieldElement.selectedIndex].textContent;
+  priceFieldElement.placeholder = MIN_AMOUNT[type];
 });
 
 // Валидация цены
-function validatePrice (value) {
-  const type = adForm.querySelector('#type')[typeField.selectedIndex];
+const validatePrice = (value) => {
+  const type = adFormElement.querySelector('#type')[typeFieldElement.selectedIndex];
   return value.length && parseInt(value, 10) >= MIN_AMOUNT[type.textContent];
-}
+};
 
-function getPriceErrorMessage () {
-  const type = adForm.querySelector('#type')[typeField.selectedIndex];
+const getPriceErrorMessage = () => {
+  const type = adFormElement.querySelector('#type')[typeFieldElement.selectedIndex];
   return `Минимальная цена для данного типа жилья ${MIN_AMOUNT[type.textContent]}`;
-}
+};
 
-pristine.addValidator(priceField, validatePrice, getPriceErrorMessage);
-
+pristine.addValidator(priceFieldElement, validatePrice, getPriceErrorMessage);
 
 // Валидация к-ва комнат
 // сначала синхронизируем переключение вместимости при изменении комнат
-roomField.addEventListener('change', () => {
-  const room = roomField[roomField.selectedIndex].textContent;
-  capacityField.value = ROOM_OPTION_SELECT[room];
+roomFieldElement.addEventListener('change', () => {
+  const room = roomFieldElement[roomFieldElement.selectedIndex].textContent;
+  capacityFieldElement.value = ROOM_OPTION_SELECT[room];
 });
 
 // валидируем
-function validateCapacity () {
-  return ROOM_OPTION[roomField[roomField.selectedIndex].textContent].includes(capacityField[capacityField.selectedIndex].textContent);
-}
+const validateCapacity = () => ROOM_OPTION[roomFieldElement[roomFieldElement.selectedIndex].textContent].includes(capacityFieldElement[capacityFieldElement.selectedIndex].textContent);
 
-function getRoomErrorMessage () {
-  return `
-    ${roomField[roomField.selectedIndex].textContent}
-    ${capacityField[capacityField.selectedIndex].textContent.toLowerCase()}
-    ${roomField[roomField.selectedIndex].textContent === '1 комната' ? 'невозможно  ' : 'невозможно'}
+const getRoomErrorMessage = () => `
+    ${roomFieldElement[roomFieldElement.selectedIndex].textContent}
+    ${capacityFieldElement[capacityFieldElement.selectedIndex].textContent.toLowerCase()}
+    ${roomFieldElement[roomFieldElement.selectedIndex].textContent === '1 комната' ? 'невозможно  ' : 'невозможно'}
   `;
-}
 
-pristine.addValidator(capacityField, validateCapacity, getRoomErrorMessage);
+pristine.addValidator(capacityFieldElement, validateCapacity, getRoomErrorMessage);
 
 // Синхронизация заезда / выезда
-timeIn.addEventListener('change', () => {
-  timeOut.value = timeIn.value;
+timeInElement.addEventListener('change', () => {
+  timeOutElement.value = timeInElement.value;
 });
 
-timeOut.addEventListener('change', () => {
-  timeIn.value = timeOut.value;
+timeOutElement.addEventListener('change', () => {
+  timeInElement.value = timeOutElement.value;
 });
 
 // noUiSlider
@@ -111,12 +104,8 @@ noUiSlider.create(sliderElement,{
   step: 1,
   connect: 'lower',
   format: {
-    to: function (value) {
-      return value.toFixed(0);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    to: (value) => value.toFixed(0),
+    from: (value) => parseFloat(value),
   },
 });
 
@@ -130,24 +119,26 @@ valueElement.addEventListener('input', (evt) => {
 });
 
 // submit
-adForm.addEventListener('submit', (evt) => {
+adFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    blockSubmitButton(submitButton);
+    blockSubmitButton(submitButtonElement);
     sendData(
       //тут функция onSuccess
       () => {
         successAlert();
-        unblockSubmitButton(submitButton);
+        unblockSubmitButton(submitButtonElement);
         evt.target.reset();
       },
       //тут у нас функция onFail
       () => {
         errorAlert();
-        unblockSubmitButton(submitButton);
+        unblockSubmitButton(submitButtonElement);
       },
       new FormData(evt.target),
     );
   }
 
 });
+
+export {adFormElement};

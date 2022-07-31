@@ -1,27 +1,35 @@
+import {adFormElement} from './form.js';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const avatarFileChooser = document.querySelector('#avatar');
-const avatarPreview = document.querySelector('#img-preview-avatar');
-const fileChooser = document.querySelector('#images');
-const preview = document.querySelector('#img-preview');
+const avatarFileChooserElement = document.querySelector('#avatar');
+const avatarPreviewElement = document.querySelector('#img-preview-avatar');
+const fileChooserElement = document.querySelector('#images');
+const previewElement = document.querySelector('#img-preview');
 
 // Аватар фото
-avatarFileChooser.addEventListener('change', () => {
-  const file = avatarFileChooser.files[0];
+avatarFileChooserElement.addEventListener('change', () => {
+  const file = avatarFileChooserElement.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
-    avatarPreview.src = URL.createObjectURL(file);
+    avatarPreviewElement.src = URL.createObjectURL(file);
   }
 });
 
 // Фото объявления
-fileChooser.addEventListener('change', () => {
-  const file = fileChooser.files[0];
+fileChooserElement.addEventListener('change', () => {
+  const file = fileChooserElement.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-    preview.src = URL.createObjectURL(file);
+    previewElement.src = URL.createObjectURL(file);
   }
+});
+
+// сброс при reset
+adFormElement.addEventListener('reset', () => {
+  avatarPreviewElement.src = 'img/muffin-grey.svg';
+  previewElement.src = 'img/muffin-grey.svg';
 });

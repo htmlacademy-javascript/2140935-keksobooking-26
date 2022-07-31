@@ -1,5 +1,7 @@
 import {formInactive, formActive} from './utils.js';
 import {getData} from './api.js';
+import {adFormElement} from './form.js';
+import {filterFormElement} from './filter.js';
 
 const MAP_ADS_COUNT = 10;
 
@@ -8,9 +10,9 @@ formInactive();
 
 // инициализация
 const map = L.map('map-canvas')
-  .on('load', () => {
+  /*.on('load', () => {
     formActive();
-  })
+  })*/
   .setView({
     lat: 35.677000,
     lng: 139.754000,
@@ -39,14 +41,17 @@ const mainPinMarker = L.marker(
     draggable: true,
     icon: mainPinIcon,
   },
-);
+)
+  .on('load', () => {
+    formActive();
+  });
 
 mainPinMarker.addTo(map);
 
-const addressField = document.querySelector('#address');
+const addressFieldElement = document.querySelector('#address');
 
 mainPinMarker.on('moveend', (evt) => {
-  addressField.value = evt.target.getLatLng();
+  addressFieldElement.value = evt.target.getLatLng();
 });
 
 // остальные метки
@@ -117,7 +122,7 @@ const createCustomPopup = (point) => {
   return popupElement;
 };
 
-const markerGroup = L.layerGroup().addTo(map);
+const markerGroupLayer = L.layerGroup().addTo(map);
 
 const createMarker = (element) => {
   const randomLat = element.location.lat;
@@ -135,18 +140,32 @@ const createMarker = (element) => {
   );
 
   pinMarker
-    .addTo(markerGroup)
+    .addTo(markerGroupLayer)
     .bindPopup(createCustomPopup(element));
 };
 const showMessage = () => {};
 
-const offers = (ads) => {
+const showOffers = (ads) => {
   const limitedAds = ads.slice(0, MAP_ADS_COUNT);
   limitedAds.forEach((element) => {
     createMarker(element);
   });
 };
 
-getData(offers, showMessage);
+getData(showOffers, showMessage);
 
-export{map, markerGroup, createCustomPopup, pinIcon, MAP_ADS_COUNT};
+// вывод балунов при reset
+adFormElement.addEventListener('reset', (evt) => {
+  evt.target.reset();
+  filterFormElement.reset();
+  getData(showOffers, showMessage);
+  mainPinMarker.setLatLng(
+    {
+      lat: 35.68061,
+      lng: 139.7541,
+    },
+  );
+  //закрыть открытый балун
+});
+
+export{map, markerGroupLayer, createCustomPopup, pinIcon, MAP_ADS_COUNT};
