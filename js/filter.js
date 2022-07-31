@@ -101,7 +101,6 @@ const filterAll = (ads) => {
     }
 
     // вывожу на карту
-
     filterGroupLayer = L.layerGroup().addTo(map);
 
     const createMarker = (element) => {
