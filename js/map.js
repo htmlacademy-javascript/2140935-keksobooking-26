@@ -165,7 +165,7 @@ adFormElement.addEventListener('reset', (evt) => {
       lng: 139.7541,
     },
   );
-  //закрыть открытый балун
+  //закрыть открытый балун (найти в документации)
 });
 
 export{map, markerGroupLayer, createCustomPopup, pinIcon, MAP_ADS_COUNT};
