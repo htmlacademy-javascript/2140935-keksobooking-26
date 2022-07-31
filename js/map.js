@@ -10,9 +10,9 @@ formInactive();
 
 // инициализация
 const map = L.map('map-canvas')
-  /*.on('load', () => {
+  .on('load', () => {
     formActive();
-  })*/
+  })
   .setView({
     lat: 35.677000,
     lng: 139.754000,
@@ -42,9 +42,9 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 )
-  .on('load', () => {
+  /*.on('load', () => {
     formActive();
-  });
+  });*/
 
 mainPinMarker.addTo(map);
 
