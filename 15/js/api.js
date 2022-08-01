@@ -2,7 +2,7 @@ import {getDataErrorAlert, filterInactive} from './utils.js';
 
 let alertOpen = true;
 const getData = (onSuccess, onFail) => {
-  fetch('https://26.javascript.pages.academ/keksobooking/data')
+  fetch('https://26.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((ads) => {
       onSuccess(ads);
