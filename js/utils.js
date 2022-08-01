@@ -15,7 +15,7 @@ const filterInactive = () => {
 
 };
 
-const formInactive = () => {
+const allInactive = () => {
 
   const adFormActiveElement = document.querySelector('.ad-form');
   adFormActiveElement.classList.add('ad-form--disabled');
@@ -50,20 +50,39 @@ const formActive = () => {
   const adFormDisabledElement = document.querySelector('.ad-form');
   adFormDisabledElement.classList.remove('ad-form--disabled');
 
-  const inputDisabledAllElement = document.querySelectorAll('input[disabled]');
+  const inputDisabledAllElement = adFormDisabledElement.querySelectorAll('input[disabled]');
   for (const inputDisabled of inputDisabledAllElement) {
     inputDisabled.removeAttribute('disabled');
   }
 
-  const fieldsetDisabledAllElement = document.querySelectorAll('fieldset[disabled]');
+  const fieldsetDisabledAllElement = adFormDisabledElement.querySelectorAll('fieldset[disabled]');
   for (const fieldsetDisabledElement of fieldsetDisabledAllElement) {
     fieldsetDisabledElement.removeAttribute('disabled');
   }
 
+  const selectDisabledAllElement = adFormDisabledElement.querySelectorAll('select[disabled]');
+  for (const selectDisabledElement of selectDisabledAllElement) {
+    selectDisabledElement.removeAttribute('disabled');
+  }
+
+};
+
+const filterActive = () => {
+
   const mapFiltersDisabledElement = document.querySelector('.map__filters');
   mapFiltersDisabledElement.classList.remove('map__filters--disabled');
 
-  const selectDisabledAllElement = document.querySelectorAll('select[disabled]');
+  const inputDisabledAllElement = mapFiltersDisabledElement.querySelectorAll('input[disabled]');
+  for (const inputDisabledElement of inputDisabledAllElement) {
+    inputDisabledElement.removeAttribute('disabled');
+  }
+
+  const fieldsetDisabledAllElement = mapFiltersDisabledElement.querySelectorAll('fieldset[disabled]');
+  for (const fieldsetDisabledElement of fieldsetDisabledAllElement) {
+    fieldsetDisabledElement.removeAttribute('disabled');
+  }
+
+  const selectDisabledAllElement = mapFiltersDisabledElement.querySelectorAll('select[disabled]');
   for (const selectDisabledElement of selectDisabledAllElement) {
     selectDisabledElement.removeAttribute('disabled');
   }
@@ -125,6 +144,7 @@ const getDataErrorAlert = () => {
   errorElement.appendChild(errorMessage);
   errorElement.appendChild(btn);
   errorMessage.textContent = 'Ошибка загрузки данных';
+  btn.textContent = 'Закрыть';
 
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
@@ -169,4 +189,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {formInactive, formActive, successAlert, errorAlert, getDataErrorAlert, blockSubmitButton, unblockSubmitButton, debounce, filterInactive};
+export {allInactive, filterInactive, formActive, filterActive, successAlert, errorAlert, getDataErrorAlert, blockSubmitButton, unblockSubmitButton, debounce};

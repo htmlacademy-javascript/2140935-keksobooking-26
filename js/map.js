@@ -1,4 +1,4 @@
-import {formInactive, formActive} from './utils.js';
+import {allInactive, formActive, filterActive} from './utils.js';
 import {getData} from './api.js';
 import {adFormElement} from './form.js';
 import {filterFormElement} from './filter.js';
@@ -6,7 +6,7 @@ import {filterFormElement} from './filter.js';
 const MAP_ADS_COUNT = 10;
 
 // при старте inactive
-formInactive();
+allInactive();
 
 // инициализация
 const map = L.map('map-canvas')
@@ -17,6 +17,7 @@ const map = L.map('map-canvas')
     lat: 35.677000,
     lng: 139.754000,
   }, 13);
+
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -42,9 +43,6 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 )
-  /*.on('load', () => {
-    formActive();
-  });*/
 
 mainPinMarker.addTo(map);
 
@@ -122,7 +120,9 @@ const createCustomPopup = (point) => {
   return popupElement;
 };
 
-const markerGroupLayer = L.layerGroup().addTo(map);
+const markerGroupLayer = L.layerGroup()
+  .on('add', filterActive)
+  .addTo(map);
 
 const createMarker = (element) => {
   const randomLat = element.location.lat;
@@ -151,21 +151,21 @@ const showOffers = (ads) => {
     createMarker(element);
   });
 };
-
-getData(showOffers, showMessage);
+//незачем дергать несколько раз сервер
+//getData(showOffers, showMessage);
 
 // вывод балунов при reset
 adFormElement.addEventListener('reset', (evt) => {
   evt.target.reset();
   filterFormElement.reset();
   getData(showOffers, showMessage);
+  map.closePopup();
   mainPinMarker.setLatLng(
     {
       lat: 35.68061,
       lng: 139.7541,
     },
   );
-  //закрыть открытый балун (найти в документации)
 });
 
 export{map, markerGroupLayer, createCustomPopup, pinIcon, MAP_ADS_COUNT};
