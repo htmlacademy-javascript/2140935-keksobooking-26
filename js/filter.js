@@ -132,7 +132,8 @@ const drawMarker = (ads) => {
     }
   });
 
-}
+};
+
 // Фильтр
 const filterAll = (ads) => {
   //первоночально отрисовываю
