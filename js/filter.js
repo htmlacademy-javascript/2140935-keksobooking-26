@@ -33,7 +33,7 @@ const filterType = (lastArray, value) => {
 const filterGuest = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter((val)=>val.offer.guests === Number(value));
+    step = lastArray.filter((val) => val.offer.guests === Number(value));
   }
   return step;
 };
@@ -41,7 +41,7 @@ const filterGuest = (lastArray, value) => {
 const filterRoom = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter((val)=>val.offer.rooms === Number(value));
+    step = lastArray.filter((val) => val.offer.rooms === Number(value));
   }
   return step;
 };
@@ -101,7 +101,6 @@ const filterAll = (ads) => {
     }
 
     // вывожу на карту
-
     filterGroupLayer = L.layerGroup().addTo(map);
 
     const createMarker = (element) => {
