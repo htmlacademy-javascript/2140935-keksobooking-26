@@ -1,3 +1,5 @@
+import {getDataErrorAlert, filterInactive} from './utils.js';
+
 const getData = (onSuccess, onFail) => {
   fetch('https://26.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
@@ -7,9 +9,10 @@ const getData = (onSuccess, onFail) => {
     })
     .catch(() => {
       onFail('ошибка загрузки');
+      getDataErrorAlert();
+      filterInactive();
     });
 };
-
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
