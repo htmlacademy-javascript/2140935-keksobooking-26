@@ -1,4 +1,4 @@
-import {formInactive, formActive} from './utils.js';
+import {allInactive, formActive, filterActive} from './utils.js';
 import {getData} from './api.js';
 import {adFormElement} from './form.js';
 import {filterFormElement} from './filter.js';
@@ -6,13 +6,12 @@ import {filterFormElement} from './filter.js';
 const MAP_ADS_COUNT = 10;
 
 // при старте inactive
-formInactive();
+allInactive();
 
-// инициализация
 const map = L.map('map-canvas')
-  /*.on('load', () => {
+  .on('load', () => {
     formActive();
-  })*/
+  })
   .setView({
     lat: 35.677000,
     lng: 139.754000,
@@ -41,10 +40,7 @@ const mainPinMarker = L.marker(
     draggable: true,
     icon: mainPinIcon,
   },
-)
-  .on('load', () => {
-    formActive();
-  });
+);
 
 mainPinMarker.addTo(map);
 
@@ -122,7 +118,9 @@ const createCustomPopup = (point) => {
   return popupElement;
 };
 
-const markerGroupLayer = L.layerGroup().addTo(map);
+const markerGroupLayer = L.layerGroup()
+  .on('add', filterActive)
+  .addTo(map);
 
 const createMarker = (element) => {
   const randomLat = element.location.lat;
@@ -159,13 +157,14 @@ adFormElement.addEventListener('reset', (evt) => {
   evt.target.reset();
   filterFormElement.reset();
   getData(showOffers, showMessage);
+  map.closePopup();
   mainPinMarker.setLatLng(
     {
       lat: 35.68061,
       lng: 139.7541,
     },
   );
-  //закрыть открытый балун
+  //закрыть открытый балун (найти в документации)
 });
 
 export{map, markerGroupLayer, createCustomPopup, pinIcon, MAP_ADS_COUNT};
