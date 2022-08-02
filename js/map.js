@@ -8,6 +8,7 @@ const MAP_ADS_COUNT = 10;
 // при старте inactive
 allInactive();
 
+// инициализация
 const map = L.map('map-canvas')
   .on('load', () => {
     formActive();
@@ -16,6 +17,7 @@ const map = L.map('map-canvas')
     lat: 35.677000,
     lng: 139.754000,
   }, 13);
+
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -149,8 +151,8 @@ const showOffers = (ads) => {
     createMarker(element);
   });
 };
-
-getData(showOffers, showMessage);
+//незачем дергать несколько раз сервер
+//getData(showOffers, showMessage);
 
 // вывод балунов при reset
 adFormElement.addEventListener('reset', (evt) => {
@@ -164,7 +166,6 @@ adFormElement.addEventListener('reset', (evt) => {
       lng: 139.7541,
     },
   );
-  //закрыть открытый балун (найти в документации)
 });
 
 export{map, markerGroupLayer, createCustomPopup, pinIcon, MAP_ADS_COUNT};

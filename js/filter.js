@@ -33,7 +33,7 @@ const filterType = (lastArray, value) => {
 const filterGuest = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter((val) => val.offer.guests === Number(value));
+    step = lastArray.filter((val)=>val.offer.guests === Number(value));
   }
   return step;
 };
@@ -41,7 +41,7 @@ const filterGuest = (lastArray, value) => {
 const filterRoom = (lastArray, value) => {
   let step = lastArray.slice();
   if (value !== 'any') {
-    step = lastArray.filter((val) => val.offer.rooms === Number(value));
+    step = lastArray.filter((val)=>val.offer.rooms === Number(value));
   }
   return step;
 };
@@ -70,71 +70,75 @@ const filterFeatures = (lastArray, featuresList) => lastArray.filter((val) => {
   });
   return find;
 });
+const drawMarker = (ads) => {
+  const typeValue = typeElement[typeElement.selectedIndex].value;
+  const priceValue = priceElement[priceElement.selectedIndex].value;
+  const roomValue = roomElement[roomElement.selectedIndex].value;
+  const guestValue = guestElement[guestElement.selectedIndex].value;
+  let finalReturn;
 
-// Фильтр
-const filterAll = (ads) => {
-  filterFormElement.addEventListener('change', debounce(() => {
-    const typeValue = typeElement[typeElement.selectedIndex].value;
-    const priceValue = priceElement[priceElement.selectedIndex].value;
-    const roomValue = roomElement[roomElement.selectedIndex].value;
-    const guestValue = guestElement[guestElement.selectedIndex].value;
-    let finalReturn;
+  const filterSmall = () => {
+    finalReturn = ads;
+    finalReturn = filterType(finalReturn, typeValue);
+    finalReturn = filterRoom(finalReturn, roomValue);
+    finalReturn = filterPrice(finalReturn, priceValue);
+    finalReturn = filterGuest(finalReturn, guestValue);
+    finalReturn = filterFeatures(finalReturn, checkedFeaturesElement());
+  };
+  filterSmall();
+  finalReturn = finalReturn.slice(0, MAP_ADS_COUNT);
 
-    const filterSmall = () => {
-      finalReturn = ads;
-      finalReturn = filterType(finalReturn, typeValue);
-      finalReturn = filterRoom(finalReturn, roomValue);
-      finalReturn = filterPrice(finalReturn, priceValue);
-      finalReturn = filterGuest(finalReturn, guestValue);
-      finalReturn = filterFeatures(finalReturn, checkedFeaturesElement());
-    };
-    filterSmall();
-    finalReturn = finalReturn.slice(0, MAP_ADS_COUNT);
+  // удаляю старые слои
+  if (markerGroupLayer) {
+    markerGroupLayer.clearLayers();
+  }
 
-    // удаляю старые слои
-    if (markerGroupLayer) {
-      markerGroupLayer.clearLayers();
-    }
+  if (filterGroupLayer) {
+    filterGroupLayer.clearLayers();
+  }
 
+  // вывожу на карту
+  filterGroupLayer = L.layerGroup()
+    .addTo(map);
+
+  const createMarker = (element) => {
+    const randomLat = element.location.lat;
+    const randomLng = element.location.lng;
+
+    const pinMarker = L.marker(
+      {
+        lat: randomLat,
+        lng: randomLng,
+      },
+      {
+        draggable: false,
+        icon: pinIcon,
+      },
+    );
+
+    pinMarker
+      .addTo(filterGroupLayer)
+      .bindPopup(createCustomPopup(element));
+  };
+
+  finalReturn.forEach((element) => {
+    createMarker(element);
+  });
+
+  // сброс балунов фильтрации при Reset
+  filterFormElement.addEventListener('reset', () => {
     if (filterGroupLayer) {
       filterGroupLayer.clearLayers();
     }
+  });
 
-    // вывожу на карту
-    filterGroupLayer = L.layerGroup().addTo(map);
+};
 
-    const createMarker = (element) => {
-      const randomLat = element.location.lat;
-      const randomLng = element.location.lng;
-
-      const pinMarker = L.marker(
-        {
-          lat: randomLat,
-          lng: randomLng,
-        },
-        {
-          draggable: false,
-          icon: pinIcon,
-        },
-      );
-
-      pinMarker
-        .addTo(filterGroupLayer)
-        .bindPopup(createCustomPopup(element));
-    };
-
-    finalReturn.forEach((element) => {
-      createMarker(element);
-    });
-
-    // сброс балунов фильтрации при Reset
-    filterFormElement.addEventListener('reset', () => {
-      if (filterGroupLayer) {
-        filterGroupLayer.clearLayers();
-      }
-    });
-
-  }));
+// Фильтр
+const filterAll = (ads) => {
+  //первоночально отрисовываю
+  drawMarker(ads);
+  filterFormElement.addEventListener('change', debounce(() => drawMarker(ads)));
 
 };
 
